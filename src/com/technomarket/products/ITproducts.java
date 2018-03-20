@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -52,6 +53,7 @@ public abstract class ITproducts extends Product {
 				MobilePhone temp = new MobilePhone(mobileBrands[randomBrand], randomPrice, randomQuantity, mobileModels[randomModel]);
 				mobilePhones.add(temp);
 			}
+			
 		}
 
 		public static void showMobilePhones() {
@@ -64,6 +66,24 @@ public abstract class ITproducts extends Product {
 		public int compareTo(MobilePhone o) {
 			return this.getId() - o.getId();
 		}
+
+		@Override
+		public void addProduct(String brand, double price, int availability, String model) {
+			mobilePhones.add(new MobilePhone(brand, price, availability, model));
+		}
+
+		@Override
+		public void removeProduct(int id) {
+			Iterator<MobilePhone> removeIterator = mobilePhones.iterator();
+			while (removeIterator.hasNext()) {
+			    MobilePhone currentElement = removeIterator.next();
+			    if (id == currentElement.getId()) {
+			        removeIterator.remove();
+			    }
+			}
+			
+		}
+
 
 	}
 	// nested class for Laptop
@@ -100,6 +120,22 @@ public abstract class ITproducts extends Product {
 		@Override
 		public int compareTo(Laptop laptop) {
 			return this.getId() - laptop.getId();
+		}
+
+		@Override
+		public void addProduct(String brand, double price, int availability, String model) {
+			laptops.add(new Laptop(brand, price, availability, model));
+		}
+
+		@Override
+		public void removeProduct(int id) {
+			Iterator<Laptop> removeIterator = laptops.iterator();
+			while (removeIterator.hasNext()) {
+			    Laptop currentElement = removeIterator.next();
+			    if (id == currentElement.getId()) {
+			        removeIterator.remove();
+			    }
+			}
 		}
 
 	}

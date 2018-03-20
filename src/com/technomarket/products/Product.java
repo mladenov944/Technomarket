@@ -19,6 +19,10 @@ public abstract class Product {
 		this.model = (model == null) ? "BezModel" : model;
 	}
 	
+	public abstract void addProduct(String brand, double price, int availability, String model);
+	public abstract void removeProduct(int id);
+//	public abstract void editProduct(int id);
+	
 
 	public int getId() {
 		return id;
