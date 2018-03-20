@@ -1,20 +1,24 @@
+package com.technomarket.products;
 
 public abstract class Product {
-
+	
 	private final int id;
+	private static int staticId = 0;
 	private String name;
 	private String brand;
 	private double price;
 	private int availability;
+	private String model;
 
-	public Product(String name, String brand, double price, int availability) {
-		int randomId = (int) (Math.random() * 100000);
-		this.id = randomId;
+	public Product(String name, String brand, double price, int availability, String model) {
+		this.id = ++staticId;
 		this.name = (name == null) ? "bezIme" : name;
 		this.brand = (brand == null) ? "bezMarka" : brand;
 		this.price = (price > 0) ? price : 0;
 		this.availability = (availability >= 0) ? availability : 0;
+		this.model = (model == null) ? "BezModel" : model;
 	}
+	
 
 	public int getId() {
 		return id;
@@ -35,20 +39,23 @@ public abstract class Product {
 	public int getAvailability() {
 		return availability;
 	}
-
-	protected static void generateProducts() {
-		Laptop.generateLaptops();
-		MobilePhone.generateMobilePhones();
+	public String getModel() {
+		return model;
 	}
 
+	// Genereting random IT products
+	protected static void generateProducts() {
+		ITproducts.generateITproducts();
+	}
+	// Showing all products
 	protected static void showAllProducts() {
-		Laptop.showLaptops();
-		MobilePhone.showMobilePhones();
+		ITproducts.Laptop.showLaptops();
+		ITproducts.MobilePhone.showMobilePhones();
 	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", brand=" + brand + ", price=" + price + ", availability="
+		return "Продукт [ИД: " + id + "  Вид - " + name + "  Марка - " + brand + " Модел: " +model + "   Цена=" + price + "лв,   Количество: "
 				+ availability + "]";
 	}
 }
