@@ -55,7 +55,7 @@ public abstract class Product {
 
 	@Override
 	public String toString() {
-		return "Продукт [ИД: " + id + "  Вид - " + name + "  Марка - " + brand + " Модел: " +model + "   Цена=" + price + "лв,   Количество: "
+		return "Product [ID: " + id + "  Type - " + name + "  Marka - " + brand + " Model: " +model + "   Price=" + price + "lv,   Quantity: "
 				+ availability + "]";
 	}
 }
