@@ -1,13 +1,14 @@
 import com.technomarket.products.ITproducts;
+import com.technomarket.products.SearchBar;
 
 public class Demo {
 
-
 	public static void main(String[] args) {
-		
-//		Product.showAllProducts();
+
+		// Product.showAllProducts();
 		ITproducts.generateITproducts();
-		ITproducts.MobilePhone.sort();
-	
+		ITproducts.Laptop.showLaptops();
+		ITproducts.MobilePhone.showMobilePhones();
+		SearchBar.searchByKeyword();
 	}
 }

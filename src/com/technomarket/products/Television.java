@@ -9,13 +9,13 @@ public class Television extends ITproducts {
 	@Override
 	public void addProduct(String brand, double price, int availability, String model) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void removeProduct(int id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
