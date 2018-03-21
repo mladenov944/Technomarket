@@ -11,13 +11,20 @@ import java.util.TreeSet;
 
 public abstract class ITproducts extends Product {
 
+
+	protected static final int MAX_PRODUCTS = 50;
+
+
 	public ITproducts(String name, String brand, double price, int availability, String model) {
 		super(name, brand, price, availability, model);
 	}
 
-	// Generating all IT products
-	public static Set<Product> generateITproducts() {
-		Set<Product> products = new HashSet<Product>();
+
+//	// Generating all IT products
+//	public static Set<Product> generateITproducts() {
+//		Set<Product> products = new HashSet<Product>();
+
+	public static void generateITproducts() {
 		MobilePhone.generateMobilePhones();
 		Laptop.generateLaptops();
 		Television.generateTelevisions();
@@ -25,7 +32,7 @@ public abstract class ITproducts extends Product {
 		
 		
 		
-		return products;
+//		return products;
 	}
 
 	public static void showAllProducts() {
@@ -86,6 +93,10 @@ public abstract class ITproducts extends Product {
 			return this.getId() - o.getId();
 		}
 
+		public static Set<MobilePhone> getMobilePhones() {
+			return mobilePhones;
+		}
+
 		@Override
 		public void addProduct(String brand, double price, int availability, String model) {
 			mobilePhones.add(new MobilePhone(brand, price, availability, model));
@@ -135,6 +146,10 @@ public abstract class ITproducts extends Product {
 			for (Laptop l : laptops) {
 				System.out.println(l);
 			}
+		}
+
+		public static Set<Laptop> getLaptops() {
+			return laptops;
 		}
 
 		@Override

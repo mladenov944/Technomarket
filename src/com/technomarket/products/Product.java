@@ -20,11 +20,11 @@ public abstract class Product {
 		this.availability = (availability >= 0) ? availability : 0;
 		this.model = (model == null) ? "BezModel" : model;
 	}
-	
+
 	public abstract void addProduct(String brand, double price, int availability, String model);
+
 	public abstract void removeProduct(int id);
-//	public abstract void editProduct(int id);
-	
+	// public abstract void editProduct(int id);
 
 	public int getId() {
 		return id;
@@ -45,6 +45,7 @@ public abstract class Product {
 	public int getAvailability() {
 		return availability;
 	}
+
 	public String getModel() {
 		return model;
 	}
@@ -54,6 +55,7 @@ public abstract class Product {
 		ITproducts.generateITproducts();
 		HomeCareProducts.generateHomeCareProducts();
 	}
+
 	// Showing all products
 	public static void showAllProducts() {
 		ITproducts.showAllProducts();
@@ -64,8 +66,11 @@ public abstract class Product {
 
 	@Override
 	public String toString() {
-		return "Product ["+name + ">>" + brand + " " + model + "<<    cena: " + price + "leva  -- nalichnost: " + availability + "<<< ID: " + id + "]";
+
+		return "Product [ID: " + id + "  Type - " + name + "  Brand - " + brand + " Model: " + model + "   Price="
+				+ price + "lv,   Quantity: " + availability + "]";
 //		return "Product [ID: " + id + "  Type - " + name + "  Marka - " + brand + " Model: " +model + "   Price=" + price + "lv,   Quantity: "
 //				+ availability + "]";
+
 	}
 }
