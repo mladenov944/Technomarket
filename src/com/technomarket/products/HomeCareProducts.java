@@ -1,5 +1,6 @@
 package com.technomarket.products;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -73,7 +74,7 @@ public abstract class HomeCareProducts extends Product {
 		}
 
 		public static Set<Prahosmukachka> getPrahosmukachki() {
-			return prahosmukachki;
+			return Collections.unmodifiableSet(prahosmukachki);
 		}
 
 		public static void showPrahosmukachki() {
@@ -95,7 +96,7 @@ public abstract class HomeCareProducts extends Product {
 		private static Set<Iron> irons = new HashSet<Iron>();
 
 		public static Set<Iron> getIrons() {
-			return irons;
+			return Collections.unmodifiableSet(irons);
 		}
 
 		@Override
@@ -155,7 +156,7 @@ public abstract class HomeCareProducts extends Product {
 		private static Set<Peralnq> peralni = new HashSet<Peralnq>();
 
 		public static Set<Peralnq> getPeralni() {
-			return peralni;
+			return Collections.unmodifiableSet(peralni);
 		}
 
 		@Override

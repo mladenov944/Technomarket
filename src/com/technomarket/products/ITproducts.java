@@ -194,10 +194,6 @@ public abstract class ITproducts extends Product {
 				tablets.add(temp);
 			}
 		}
-
-		public static Set<Tablet> getTablets() {
-			return tablets;
-		}
 		
 		public static void showTablets() {
 			for (Tablet t : tablets) {
@@ -256,10 +252,6 @@ public abstract class ITproducts extends Product {
 						TvModels[randomModel]);
 				televisions.add(temp);
 			}
-		}
-
-		public static Set<Television> getTelevisions() {
-			return televisions;
 		}
 
 		public static void showTelevisions() {
