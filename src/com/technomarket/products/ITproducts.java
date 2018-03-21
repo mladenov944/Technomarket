@@ -11,28 +11,23 @@ import java.util.TreeSet;
 
 public abstract class ITproducts extends Product {
 
-
 	protected static final int MAX_PRODUCTS = 50;
-
 
 	public ITproducts(String name, String brand, double price, int availability, String model) {
 		super(name, brand, price, availability, model);
 	}
 
-
-//	// Generating all IT products
-//	public static Set<Product> generateITproducts() {
-//		Set<Product> products = new HashSet<Product>();
+	// // Generating all IT products
+	// public static Set<Product> generateITproducts() {
+	// Set<Product> products = new HashSet<Product>();
 
 	public static void generateITproducts() {
 		MobilePhone.generateMobilePhones();
 		Laptop.generateLaptops();
 		Television.generateTelevisions();
 		Tablet.generateTablets();
-		
-		
-		
-//		return products;
+
+		// return products;
 	}
 
 	public static void showAllProducts() {
@@ -63,8 +58,7 @@ public abstract class ITproducts extends Product {
 		}
 
 		public static void generateMobilePhones() {
-			
-			
+
 			String[] mobileBrands = { "Samsung", "Asus", "Lenovo", "iPhone", "Nokia", "Huawei", "Motorola", "HTC",
 					"Sony" };
 			String[] mobileModels = { "One", "Super", "Bussiness", "Pro", "A1", "S10" };
@@ -94,7 +88,7 @@ public abstract class ITproducts extends Product {
 		}
 
 		public static Set<MobilePhone> getMobilePhones() {
-			return mobilePhones;
+			return Collections.unmodifiableSet(mobilePhones);
 		}
 
 		@Override
@@ -149,7 +143,7 @@ public abstract class ITproducts extends Product {
 		}
 
 		public static Set<Laptop> getLaptops() {
-			return laptops;
+			return Collections.unmodifiableSet(laptops);
 		}
 
 		@Override
@@ -228,6 +222,10 @@ public abstract class ITproducts extends Product {
 			}
 		}
 
+		public static Set<Tablet> getTablets() {
+			return Collections.unmodifiableSet(tablets);
+		}
+
 	}
 
 	// nested class for Televisions
@@ -283,5 +281,10 @@ public abstract class ITproducts extends Product {
 			}
 		}
 
+		public static Set<Television> getTelevisions() {
+			return Collections.unmodifiableSet(televisions);
+		}
+
 	}
+
 }
