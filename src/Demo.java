@@ -8,16 +8,10 @@ import com.technomarket.products.Product;
 public class Demo {
 
 	public static void main(String[] args) {
-
-		// Product.showAllProducts();
-		ITproducts.generateITproducts();
-		ITproducts.Laptop.showLaptops();
-		ITproducts.MobilePhone.showMobilePhones();
-		SearchBar.searchByKeyword();
-		
 		
 		Set<Product> products = new HashSet<>();
 		Product.generateProducts();
+		//SearchBar.searchByKeyword();
 		Product.showAllProducts();
 		
 	}
