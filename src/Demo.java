@@ -1,5 +1,9 @@
 import com.technomarket.products.ITproducts;
 import com.technomarket.products.SearchBar;
+import java.util.HashSet;
+import java.util.Set;
+import com.technomarket.products.Product;
+
 
 public class Demo {
 
@@ -10,5 +14,11 @@ public class Demo {
 		ITproducts.Laptop.showLaptops();
 		ITproducts.MobilePhone.showMobilePhones();
 		SearchBar.searchByKeyword();
+		
+		
+		Set<Product> products = new HashSet<>();
+		Product.generateProducts();
+		Product.showAllProducts();
+		
 	}
 }
