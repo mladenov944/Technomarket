@@ -2,6 +2,8 @@ package com.technomarket.products;
 
 public abstract class Product {
 	
+	protected static final int MAX_PRODUCTS = 50;
+	
 	private final int id;
 	private static int staticId = 0;
 	private String name;
@@ -48,18 +50,22 @@ public abstract class Product {
 	}
 
 	// Genereting random IT products
-	protected static void generateProducts() {
+	public static void generateProducts() {
 		ITproducts.generateITproducts();
+		HomeCareProducts.generateHomeCareProducts();
 	}
 	// Showing all products
-	protected static void showAllProducts() {
-		ITproducts.Laptop.showLaptops();
-		ITproducts.MobilePhone.showMobilePhones();
+	public static void showAllProducts() {
+		ITproducts.showAllProducts();
+		HomeCareProducts.showAllHomeCareProducts();
+	
+		
 	}
 
 	@Override
 	public String toString() {
-		return "Product [ID: " + id + "  Type - " + name + "  Marka - " + brand + " Model: " +model + "   Price=" + price + "lv,   Quantity: "
-				+ availability + "]";
+		return "Product ["+name + ">>" + brand + " " + model + "<<    cena: " + price + "leva  -- nalichnost: " + availability + "<<< ID: " + id + "]";
+//		return "Product [ID: " + id + "  Type - " + name + "  Marka - " + brand + " Model: " +model + "   Price=" + price + "lv,   Quantity: "
+//				+ availability + "]";
 	}
 }
