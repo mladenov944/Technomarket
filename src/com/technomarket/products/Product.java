@@ -6,7 +6,7 @@ public abstract class Product {
 	
 	private final int id;
 	private static int staticId = 0;
-	private static String name;
+	private String name;
 	private String brand;
 	private double price;
 	private int availability;
@@ -14,7 +14,7 @@ public abstract class Product {
 
 	public Product(String name, String brand, double price, int availability, String model) {
 		this.id = ++staticId;
-		Product.name = (name == null) ? "bezIme" : name;
+		this.name = (name == null) ? "bezIme" : name;
 		this.brand = (brand == null) ? "bezMarka" : brand;
 		this.price = (price > 0) ? price : 0;
 		this.availability = (availability >= 0) ? availability : 0;
