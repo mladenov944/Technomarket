@@ -16,11 +16,16 @@ public abstract class ITproducts extends Product {
 	}
 
 	// Generating all IT products
-	public static void generateITproducts() {
+	public static Set<Product> generateITproducts() {
+		Set<Product> products = new HashSet<Product>();
 		MobilePhone.generateMobilePhones();
 		Laptop.generateLaptops();
 		Television.generateTelevisions();
 		Tablet.generateTablets();
+		
+		
+		
+		return products;
 	}
 
 	public static void showAllProducts() {
@@ -44,13 +49,15 @@ public abstract class ITproducts extends Product {
 			}
 		}
 
-		private static Set<MobilePhone> mobilePhones = new HashSet<MobilePhone>();
+		private static Set<MobilePhone> mobilePhones = new TreeSet<MobilePhone>();
 
 		public MobilePhone(String brand, double price, int availability, String model) {
 			super("Mobile Phone", brand, price, availability, model);
 		}
 
 		public static void generateMobilePhones() {
+			
+			
 			String[] mobileBrands = { "Samsung", "Asus", "Lenovo", "iPhone", "Nokia", "Huawei", "Motorola", "HTC",
 					"Sony" };
 			String[] mobileModels = { "One", "Super", "Bussiness", "Pro", "A1", "S10" };
@@ -66,7 +73,6 @@ public abstract class ITproducts extends Product {
 						mobileModels[randomModel]);
 				mobilePhones.add(temp);
 			}
-
 		}
 
 		public static void showMobilePhones() {
