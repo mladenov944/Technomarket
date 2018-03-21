@@ -12,6 +12,7 @@ public class Demo {
 //		
 //		Product.generateProducts();
 //		Product.showAllProducts();
+
 		
 		Product.generateProducts();
 		Product.showAllProducts();

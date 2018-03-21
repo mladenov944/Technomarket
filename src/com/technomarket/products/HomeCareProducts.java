@@ -52,7 +52,7 @@ public abstract class HomeCareProducts extends Product {
 
 		@Override
 		public int compareTo(Prahosmukachka o) {
-			return (int) (this.getId()-o.getId());
+			return (int) (this.getId() - o.getId());
 		}
 
 		public static void generatePrahosmukachki() {
@@ -70,6 +70,10 @@ public abstract class HomeCareProducts extends Product {
 						PrahosmukachkaModels[randomModel]);
 				prahosmukachki.add(temp);
 			}
+		}
+
+		public static Set<Prahosmukachka> getPrahosmukachki() {
+			return prahosmukachki;
 		}
 
 		public static void showPrahosmukachki() {
@@ -90,6 +94,10 @@ public abstract class HomeCareProducts extends Product {
 
 		private static Set<Iron> irons = new HashSet<Iron>();
 
+		public static Set<Iron> getIrons() {
+			return irons;
+		}
+
 		@Override
 		public void addProduct(String brand, double price, int availability, String model) {
 			irons.add(new Iron(brand, price, availability, model));
@@ -109,7 +117,7 @@ public abstract class HomeCareProducts extends Product {
 
 		@Override
 		public int compareTo(Iron iron) {
-			 return (int) (this.getId()-iron.getId());
+			return (int) (this.getId() - iron.getId());
 		}
 
 		public static void generateIrons() {
@@ -146,6 +154,10 @@ public abstract class HomeCareProducts extends Product {
 
 		private static Set<Peralnq> peralni = new HashSet<Peralnq>();
 
+		public static Set<Peralnq> getPeralni() {
+			return peralni;
+		}
+
 		@Override
 		public void addProduct(String brand, double price, int availability, String model) {
 			peralni.add(new Peralnq(brand, price, availability, model));
@@ -165,7 +177,7 @@ public abstract class HomeCareProducts extends Product {
 
 		@Override
 		public int compareTo(Peralnq peralnq) {
-			return (int) (this.getId()-peralnq.getId());
+			return (int) (this.getId() - peralnq.getId());
 		}
 
 		public static void generatePeralni() {
@@ -179,7 +191,8 @@ public abstract class HomeCareProducts extends Product {
 				int randomBrand = (int) (Math.random() * peralnqBrands.length);
 				int randomModel = (int) (Math.random() * peralnqModels.length);
 
-				Peralnq temp = new Peralnq(peralnqBrands[randomBrand], randomPrice, randomQuantity, peralnqModels[randomModel]);
+				Peralnq temp = new Peralnq(peralnqBrands[randomBrand], randomPrice, randomQuantity,
+						peralnqModels[randomModel]);
 				peralni.add(temp);
 			}
 		}

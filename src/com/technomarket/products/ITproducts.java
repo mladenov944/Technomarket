@@ -169,7 +169,7 @@ public abstract class ITproducts extends Product {
 
 	}
 
-	// nested class for Laptop
+	// nested class for Tablet
 	public static class Tablet extends ITproducts implements Comparable<Tablet> {
 
 		private static Set<Tablet> tablets = new TreeSet<Tablet>();
@@ -195,6 +195,10 @@ public abstract class ITproducts extends Product {
 			}
 		}
 
+		public static Set<Tablet> getTablets() {
+			return tablets;
+		}
+		
 		public static void showTablets() {
 			for (Tablet t : tablets) {
 				System.out.println(t);
@@ -252,6 +256,10 @@ public abstract class ITproducts extends Product {
 						TvModels[randomModel]);
 				televisions.add(temp);
 			}
+		}
+
+		public static Set<Television> getTelevisions() {
+			return televisions;
 		}
 
 		public static void showTelevisions() {
