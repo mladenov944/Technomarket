@@ -1,3 +1,6 @@
+package com.technomarket.users;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.technomarket.products.Product;
@@ -13,10 +16,13 @@ public class User {
 	private Registration reg;
 	private Basket basket;
 	private boolean isLoged;
+	private Map<Long, Order> orders;
+	Scanner sc = new Scanner(System.in);
 
 	public User(Registration reg) {
 		this.reg = reg;
 		this.basket = new Basket(this);
+		this.orders = new HashMap<Long, Order>();
 		this.isLoged = false;
 	}
 
@@ -56,7 +62,6 @@ public class User {
 
 	public void login() {
 		if (!this.isLoged) {
-			Scanner sc = new Scanner(System.in);
 			System.out.println("Email: ");
 			String email = sc.nextLine();
 			System.out.println("Password: ");
@@ -75,12 +80,33 @@ public class User {
 		}
 	}
 
+	public void buy() {
+		try {
+			Order o = new Order(this, this.basket);
+			System.out.println(o.toString() + '\n' + "Molq potvurdete poruchkata");
+			confirmOrder(o);
+			orders.put(o.getOrderID(), o);
+			basket.empty();
+		} catch (OrderException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private void confirmOrder(Order o) throws OrderException {
+		System.out.println("Adres za dostatvka: ");
+		String address = sc.next();
+		System.out.println("Telefon za kontakt: ");
+		String phone = sc.next();
+		o.confirm(address, phone);
+	}
+
 	public boolean isLoged() {
 		return isLoged;
 	}
 
 	@Override
 	public String toString() {
-		return ("User: " + this.reg.toString());
+		return ("USER: " + '\n' + "Ime: " + this.reg.getFirstName() + " " + this.reg.getLastName() + '\n' + "Email: "
+				+ this.reg.getEmail() + '\n');
 	}
 }

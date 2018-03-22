@@ -1,3 +1,4 @@
+package com.technomarket.users;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -11,14 +12,9 @@ public class Registration {
 	private boolean isMale;
 	private LocalDate dateOfBirth;
 
-	
-	public boolean isMale() {
-		return isMale;
-	}
-
 	public Registration(String firstName, String lastName, String email, String password, boolean isMale)
 			throws UserException {
-		if (!checkString(firstName) || !checkString(lastName) || !checkEMail(email)) {
+		if (!IData.checkString(firstName) || !IData.checkString(lastName) || !IData.checkEMail(email)) {
 			throw new UserException();
 		}
 		try {
@@ -31,34 +27,6 @@ public class Registration {
 		this.email = email;
 		this.isMale = isMale;
 		this.dateOfBirth = generateRandomDate();
-	}
-
-	boolean checkString(String str) {
-		return ((str != null) && (str.trim().length() > 0)) ? true : false;
-	}
-
-	boolean checkEMail(String mail) {
-		if ((checkString(mail)) && (mail.contains("@")) && (mail.contains("."))) {
-			int indexQ = 0;
-			int indexDot = 0;
-			for (int i = 0; i < mail.length(); i++) {
-				if (mail.charAt(i) == '@') {
-					indexQ = i;
-				}
-				if (mail.charAt(i) == '.') {
-					indexDot = i;
-				}
-			}
-			if (indexQ < indexDot) {
-				return true;
-			} else {
-				System.out.println("Vuveli ste nevaliden email");
-				return false;
-			}
-		} else {
-			System.out.println("Vuveli ste nevaliden email");
-			return false;
-		}
 	}
 
 	private LocalDate generateRandomDate() {
@@ -84,8 +52,21 @@ public class Registration {
 		return password;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public boolean isMale() {
+		return isMale;
+	}
+
 	public void setPassword(String password) throws UserException {
-		if (checkString(password) && (password.length() >= MIN_PSW_LENGTH) && (password.length() <= MAX_PSW_LENGTH))
+		if (IData.checkString(password) && (password.length() >= MIN_PSW_LENGTH)
+				&& (password.length() <= MAX_PSW_LENGTH))
 			this.password = password;
 		else {
 			throw new UserException("Parolata trqbva da e medu 7 i 17 simvola");
@@ -94,6 +75,7 @@ public class Registration {
 
 	@Override
 	public String toString() {
-		return this.firstName + " " + this.lastName + ", email: " + this.email + " date of birth: " + this.dateOfBirth+" psw: "+this.password;
+		return this.firstName + " " + this.lastName + ", email: " + this.email + " date of birth: " + this.dateOfBirth
+				+ " psw: " + this.password;
 	}
 }

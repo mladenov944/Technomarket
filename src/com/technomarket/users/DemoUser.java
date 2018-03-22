@@ -1,6 +1,7 @@
+package com.technomarket.users;
 
 public class DemoUser {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UserException, OrderException {
 		User user = User.generateUser();
 		System.out.println(user.toString());
 		User u2 = null;
@@ -19,6 +20,7 @@ public class DemoUser {
 			User u = User.generateUser();
 			System.out.println(u.toString());
 		}
-		
+		User u3=new User(new Registration("dassa", "dsadsa", "sasa@dsad.sa", "sasasasdasd", true));
+		Order order=new Order(u3, new Basket(u3));
 	}
 }

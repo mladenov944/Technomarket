@@ -1,8 +1,9 @@
+package com.technomarket.users;
 import java.util.ArrayList;
 import com.technomarket.products.Product;
 
 public class Basket {
-	private static final int DELIVERY_PRICE = 4;
+	private static final double DELIVERY_PRICE = 4.5;
 	private ArrayList<Product> products;
 	private User user;
 	private double priceAllProducts;
@@ -17,7 +18,7 @@ public class Basket {
 			this.products.add(p);
 			this.priceAllProducts += p.getPrice();
 		}
-		showBasket();
+		System.out.println(this.toString());
 	}
 
 	public void removeProduct(Product p) {
@@ -27,22 +28,37 @@ public class Basket {
 				break;
 			}
 		}
-		showBasket();
+		System.out.println(this.toString());
 	}
 
-	private void showBasket() {
+	@Override
+	public String toString() {
 		if (!products.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
 			for (Product p : products) {
-				System.out.println(p.toString());
+				sb.append(p.toString());
+				sb.append('\n');
 			}
-			System.out.println("Obshto za plashtane: " + (DELIVERY_PRICE + priceAllProducts));
+			return "PRODUKTI" + '\n' + sb.toString() + "Obshto za plashtane: " + calculatePrice();
 		} else {
-			System.out.println("Koshnicata e prazna");
+			return "Koshnicata e prazna";
 		}
+	}
+
+	public double calculatePrice() {
+		return DELIVERY_PRICE + priceAllProducts;
+	}
+
+	public int getBasketSize() {
+		return this.products.size();
 	}
 
 	public boolean containsProduct(Product p) {
 		return (this.products.contains(p)) ? true : false;
 	}
 
+	public void empty() {
+		this.products.clear();
+		this.priceAllProducts = 0;
+	}
 }
