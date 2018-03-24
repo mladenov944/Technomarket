@@ -4,6 +4,7 @@ public abstract class Product {
 	
 	protected static final int MAX_PRODUCTS = 50;
 	
+	 
 	private final int id;
 	private static int staticId = 0;
 	private String name;
