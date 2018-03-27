@@ -2,7 +2,7 @@ package com.technomarket.products;
 
 public abstract class Product {
 	
-	protected static final int MAX_PRODUCTS = 50;
+	protected static final int MAX_PRODUCTS = 10;
 	
 	 
 	private final int id;
@@ -55,12 +55,14 @@ public abstract class Product {
 	public static void generateProducts() {
 		ITproducts.generateITproducts();
 		HomeCareProducts.generateHomeCareProducts();
+		OtherProducts.generateOtherProducts();
 	}
 
 	// Showing all products
 	public static void showAllProducts() {
 		ITproducts.showAllProducts();
 		HomeCareProducts.showAllHomeCareProducts();
+		OtherProducts.showOtherProducts();
 	
 		
 	}

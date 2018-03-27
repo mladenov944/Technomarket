@@ -3,7 +3,6 @@ package com.technomarket.products;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +10,6 @@ import java.util.TreeSet;
 
 public abstract class ITproducts extends Product {
 
-	protected static final int MAX_PRODUCTS = 50;
 
 	public ITproducts(String name, String brand, double price, int availability, String model) {
 		super(name, brand, price, availability, model);
@@ -32,8 +30,8 @@ public abstract class ITproducts extends Product {
 
 	public static void showAllProducts() {
 		MobilePhone.showMobilePhones();
-		Television.showTelevisions();
 		Laptop.showLaptops();
+		Television.showTelevisions();
 		Tablet.showTablets();
 	}
 

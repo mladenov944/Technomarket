@@ -1,9 +1,9 @@
 package com.technomarket.products;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 public abstract class HomeCareProducts extends Product {
 
@@ -32,7 +32,7 @@ public abstract class HomeCareProducts extends Product {
 			super("Prahosmukachka ", brand, price, availability, model);
 		}
 
-		private static Set<Prahosmukachka> prahosmukachki = new HashSet<Prahosmukachka>();
+		private static Set<Prahosmukachka> prahosmukachki = new TreeSet<Prahosmukachka>();
 
 		@Override
 		public void addProduct(String brand, double price, int availability, String model) {
@@ -49,11 +49,6 @@ public abstract class HomeCareProducts extends Product {
 				}
 			}
 
-		}
-
-		@Override
-		public int compareTo(Prahosmukachka o) {
-			return (int) (this.getId() - o.getId());
 		}
 
 		public static void generatePrahosmukachki() {
@@ -83,6 +78,11 @@ public abstract class HomeCareProducts extends Product {
 			}
 		}
 
+		@Override
+		public int compareTo(Prahosmukachka p) {
+			return this.getId() - p.getId();
+		}
+
 	}
 
 	// Nested class for Irons
@@ -93,7 +93,7 @@ public abstract class HomeCareProducts extends Product {
 			super("Utiq ", brand, price, availability, model);
 		}
 
-		private static Set<Iron> irons = new HashSet<Iron>();
+		private static Set<Iron> irons = new TreeSet<Iron>();
 
 		public static Set<Iron> getIrons() {
 			return Collections.unmodifiableSet(irons);
@@ -153,7 +153,7 @@ public abstract class HomeCareProducts extends Product {
 			super("Peralnq ", brand, price, availability, model);
 		}
 
-		private static Set<Peralnq> peralni = new HashSet<Peralnq>();
+		private static Set<Peralnq> peralni = new TreeSet<Peralnq>();
 
 		public static Set<Peralnq> getPeralni() {
 			return Collections.unmodifiableSet(peralni);
