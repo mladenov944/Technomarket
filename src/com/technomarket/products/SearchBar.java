@@ -1,8 +1,16 @@
 package com.technomarket.products;
 
-import java.util.HashSet;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import com.google.gson.JsonObject;
 import com.technomarket.products.HomeCareProducts.Iron;
 import com.technomarket.products.HomeCareProducts.Peralnq;
 import com.technomarket.products.HomeCareProducts.Prahosmukachka;
@@ -10,6 +18,8 @@ import com.technomarket.products.ITproducts.Laptop;
 import com.technomarket.products.ITproducts.MobilePhone;
 import com.technomarket.products.ITproducts.Tablet;
 import com.technomarket.products.ITproducts.Television;
+import com.technomarket.products.OtherProducts.Pechka;
+import com.technomarket.products.OtherProducts.Toster;
 
 public abstract class SearchBar {
 
@@ -19,7 +29,7 @@ public abstract class SearchBar {
 
 	static Scanner s = new Scanner(System.in);
 
-	static Set<Product> catalog = new HashSet<Product>();
+	static List<Product> catalog = new ArrayList<Product>();
 
 	public static void searchByKeyword() {
 		System.out.print("SearchWord: ");
@@ -56,6 +66,56 @@ public abstract class SearchBar {
 		}
 	}
 
+	public static void printCatalog() {
+		if (catalog.isEmpty()) {
+			makeCatalog();
+		}
+		for (Product p : catalog) {
+			System.out.println(p.toString());
+		}
+	}
+
+	public static void createJsonFile() throws Exception {
+		JsonObject jsonObject = new JsonObject();
+		FileWriter fileWriter = new FileWriter("Products.json");
+		if (catalog.isEmpty()) {
+			makeCatalog();
+		}
+		for (Product p : catalog) {
+			jsonObject.addProperty("ID:", p.getId());
+			jsonObject.addProperty("Type:", p.getName());
+			jsonObject.addProperty("Brand:", p.getBrand());
+			jsonObject.addProperty("Model:", p.getModel());
+			jsonObject.addProperty("Price:", p.getPrice());
+			jsonObject.addProperty("Quantity:", p.getAvailability());
+			fileWriter.write(jsonObject.toString());
+			fileWriter.write("\r\n");
+			fileWriter.flush();
+		}
+		fileWriter.close();
+	}
+
+	public static void readJsonFile() throws Exception {
+		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
+		JSONObject obj;
+		String line = null;
+		FileReader fileReader = new FileReader("Products.json");
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		while ((line = bufferedReader.readLine()) != null) {
+			obj = (JSONObject) new JSONParser().parse(line);
+			json.add(obj);
+			Object id = obj.get("ID:");
+			Object name = obj.get("Type:");
+			Object brand = obj.get("Brand:");
+			Object model = obj.get("Model:");
+			Object price = obj.get("Price:");
+			Object availability = obj.get("Quantity:");
+			System.out.println("Product [ID: " + id + "  Type - " + name + "  Brand - " + brand + " Model: " + model + "   Price="
+				+ price + "lv   Quantity: " + availability + "]");
+		}
+		bufferedReader.close();
+	}
+
 	public String getKeyword() {
 		return keyword;
 	}
@@ -69,6 +129,8 @@ public abstract class SearchBar {
 		catalog.addAll(Prahosmukachka.getPrahosmukachki());
 		catalog.addAll(Iron.getIrons());
 		catalog.addAll(Peralnq.getPeralni());
+		catalog.addAll(Toster.getTosteri());
+		catalog.addAll(Pechka.getPechki());
 	}
 
 	public static void setKeyword(String k) {
