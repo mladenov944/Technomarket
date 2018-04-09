@@ -1,10 +1,11 @@
 package com.technomarket.products;
 
+import java.io.File;
+
 public abstract class Product {
-	
+
 	protected static final int MAX_PRODUCTS = 10;
-	
-	 
+
 	private final int id;
 	private static int staticId = 0;
 	private String name;
@@ -53,18 +54,30 @@ public abstract class Product {
 
 	// Genereting random IT products
 	public static void generateProducts() {
-		ITproducts.generateITproducts();
-		HomeCareProducts.generateHomeCareProducts();
-		OtherProducts.generateOtherProducts();
+		File jsonFile = new File("Products.json");
+		if (!jsonFile.exists()) {
+			ITproducts.generateITproducts();
+			HomeCareProducts.generateHomeCareProducts();
+			OtherProducts.generateOtherProducts();
+		} else {
+			System.out.println("Files were already created! Loading from json file now!");
+		}
 	}
 
 	// Showing all products
 	public static void showAllProducts() {
+		File jsonFile = new File("Products.json");
+		if (jsonFile.exists()) {
+			try {
+				SearchBar.readJsonFile();
+			} catch (Exception e) {
+				System.out.println("Cannot open Json file!" + e.getMessage());
+			}
+		}
 		ITproducts.showAllProducts();
 		HomeCareProducts.showAllHomeCareProducts();
 		OtherProducts.showOtherProducts();
-	
-		
+
 	}
 
 	@Override
@@ -72,8 +85,9 @@ public abstract class Product {
 
 		return "Product [ID: " + id + "  Type - " + name + "  Brand - " + brand + " Model: " + model + "   Price="
 				+ price + "lv,   Quantity: " + availability + "]";
-//		return "Product [ID: " + id + "  Type - " + name + "  Marka - " + brand + " Model: " +model + "   Price=" + price + "lv,   Quantity: "
-//				+ availability + "]";
+		// return "Product [ID: " + id + " Type - " + name + " Marka - " + brand + "
+		// Model: " +model + " Price=" + price + "lv, Quantity: "
+		// + availability + "]";
 
 	}
 }
