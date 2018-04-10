@@ -1,8 +1,19 @@
 package com.technomarket.users;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import com.google.gson.JsonObject;
 import com.technomarket.products.Product;
 
 public class User {
@@ -13,14 +24,28 @@ public class User {
 			"Vasilev", "Pavlov", "Radev" };
 	private static final String[] domains = { "@abv.bg", "@yahoo.com", "@mail.bg", "@gmail.com", "@hotmail.com" };
 
+	private HashMap<Long, Boolean> users = new HashMap<>();
+
 	private Registration reg;
 	private Basket basket;
 	private boolean isLoged;
 	private Map<Long, Order> orders;
-	Scanner sc = new Scanner(System.in);
+	static Scanner sc = new Scanner(System.in);
 
-	public User(Registration reg) {
+	public User(Registration reg) throws UserException {
+		if (userExists(reg)) {
+			throw new UserException("Takuv user sushtestvuva!");
+		}
 		this.reg = reg;
+		try {
+			// addUserToFile(reg.getId(), false);
+			users.put(reg.getId(), false);
+			addUsersToJson();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.basket = new Basket(this);
 		this.orders = new HashMap<Long, Order>();
 		this.isLoged = false;
@@ -36,21 +61,59 @@ public class User {
 		try {
 			Registration reg = new Registration(firstName, lastName, mail, psw, isMale);
 			user = new User(reg);
-		} catch (UserException e) {
+			System.out.println(user.toString());
+		} catch (UserException | RegistrationException e) {
 			e.printStackTrace();
 		}
 		return user;
 	}
 
+	private boolean userExists(Registration reg) {
+		for (Long id : users.keySet()) {
+			if (reg.getId() == id) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	static ArrayList<JSONObject> getAllUsers() throws Exception {
+		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
+		JSONObject obj;
+		String line = null;
+		File file = new File("Users.json");
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		FileReader fileReader = new FileReader(file);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		while ((line = bufferedReader.readLine()) != null) {
+			obj = (JSONObject) new JSONParser().parse(line);
+			json.add(obj);
+		}
+		bufferedReader.close();
+		return json;
+	}
+
 	public void addToBasket(Product p, int quantity) {
 		while (!this.isLoged) {
 			System.out.println("Za da dobavite produkt v kolichkata, purvo vlezte v acaunta si");
-			this.login();
+			try {
+				this.login();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if ((p != null) && (quantity > 0) && (p.getAvailability() >= quantity)) {
 			this.basket.addProduct(p, quantity);
-		} else {
-			System.out.println("Produkta ne moje da bude dobaven v koshnicata");
+			p.setAvailability(p.getAvailability() - quantity);
+			if (quantity == 0) {
+				p.removeProduct(p.getId());
+			} else {
+				System.out.println("Produkta ne moje da bude dobaven v koshnicata");
+			}
+
 		}
 	}
 
@@ -60,18 +123,25 @@ public class User {
 		}
 	}
 
-	public void login() {
-		if (!this.isLoged) {
-			System.out.println("Email: ");
-			String email = sc.nextLine();
-			System.out.println("Password: ");
-			String psw = sc.nextLine();
-			if (email.equals(this.reg.getEmail()) && psw.equals(this.reg.getPassword())) {
-				this.isLoged = true;
+	public static void login() throws Exception {
+		// if (!this.isLoged) {
+		System.out.println("Email: ");
+		String email = sc.nextLine();
+		if (Registration.registrationExists(email)) {
+			Registration reg = Registration.getRegistration(email);
+			if (isLoged(reg.getId())) {
+				System.out.println("Veche ste vlezli v akaunta si!");
 			} else {
-				System.out.println("Nevaliden email ili parola");
+				System.out.println("Password: ");
+				String psw = sc.nextLine();
+				if (reg.getPassword().equals(psw)) {
+					System.out.println("Lognate se uspeshno");
+				} else {
+					System.out.println("Nevaliden email ili parola");
+				}
 			}
 		}
+
 	}
 
 	public void logout() {
@@ -100,8 +170,39 @@ public class User {
 		o.confirm(address, phone);
 	}
 
-	public boolean isLoged() {
-		return isLoged;
+	static boolean isLoged(long id) {
+		ArrayList<JSONObject> users;
+		try {
+			users = getAllUsers();
+			for (JSONObject jo : users) {
+				if (id == (Long) jo.get("Reg_id: ")) {
+					if ((Boolean) jo.get("Is loged: ") == true) {
+						return true;
+					}
+					return false;
+				}
+			}
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	private void addUsersToJson() throws IOException {
+		File file = new File("Users.json");
+		file.createNewFile();
+		JsonObject jsonObject = new JsonObject();
+		FileWriter fileWriter = new FileWriter(file, true);
+		for (Long id : users.keySet()) {
+			jsonObject.addProperty("Reg_id: ", id);
+			jsonObject.addProperty("Is loged: ", users.get(id));
+			fileWriter.append(jsonObject.toString());
+			fileWriter.append("\r\n");
+		}
+		fileWriter.flush();
+		fileWriter.close();
+		System.out.println("User added to file!");
 	}
 
 	@Override

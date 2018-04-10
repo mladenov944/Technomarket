@@ -52,16 +52,25 @@ public abstract class Product {
 		return model;
 	}
 
+	public void setAvailability(int availability) {
+		this.availability = availability;
+	}
+
 	// Genereting random IT products
 	public static void generateProducts() {
-		File jsonFile = new File("Products.json");
-		if (!jsonFile.exists()) {
+//		File jsonFile = new File("Products.json");
+//		if (!jsonFile.exists()) {
 			ITproducts.generateITproducts();
 			HomeCareProducts.generateHomeCareProducts();
 			OtherProducts.generateOtherProducts();
-		} else {
-			System.out.println("Files were already created! Loading from json file now!");
-		}
+			try {
+				SearchBar.createJsonFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+//		} else {
+//			System.out.println("Files were already created! Loading from json file now!");
+//		}
 	}
 
 	// Showing all products
