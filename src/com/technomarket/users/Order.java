@@ -1,5 +1,10 @@
 package com.technomarket.users;
+
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
+
+import com.technomarket.products.Product;
 
 public class Order {
 	private static final int DAYS_FOR_DELIVERY = 1;
@@ -38,6 +43,10 @@ public class Order {
 		}
 	}
 
+	public double getPrice() {
+		return this.basket.calculatePrice();
+	}
+
 	private String confirmToString() {
 		return "Poruchkata e potvurdena" + '\n' + "Data na potvurjdenie: " + this.confirmDate + '\n'
 				+ "Data za dostavka: " + this.deliveryDate + '\n' + "Adres za dostavka: " + this.deliveryAddress + '\n'
@@ -52,4 +61,5 @@ public class Order {
 	public long getOrderID() {
 		return orderID;
 	}
+
 }
