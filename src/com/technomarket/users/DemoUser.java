@@ -20,7 +20,7 @@ public class DemoUser {
 			e.printStackTrace();
 		}
 
-//		Product.generateProducts();
+		SearchBar.createJsonFile();
 		SearchBar.searchByPrice();
 
 		
