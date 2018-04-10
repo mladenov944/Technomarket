@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
+//import java.io.PrintWriter;
+//import java.nio.file.Files;
 //import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,7 +127,12 @@ public class User {
 	public void addToBasket(Product p, int quantity) {
 		while (!this.isLoged) {
 			System.out.println("Za da dobavite produkt v kolichkata, purvo vlezte v acaunta si");
-			this.login();
+			try {
+				this.login();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if ((p != null) && (quantity > 0) && (p.getAvailability() >= quantity)) {
 			this.basket.addProduct(p, quantity);
@@ -142,55 +147,61 @@ public class User {
 		}
 	}
 
-	public void login() {
-		if (!this.isLoged) {
-			System.out.println("Email: ");
-			String email = sc.nextLine();
-			System.out.println("Password: ");
-			String psw = sc.nextLine();
-			try {
-				Registration reg = Registration.getRegistration(email);
-				if (email.equals(reg.getEmail()) && psw.equals(reg.getPassword())) {
-					this.isLoged = true;
-				} else {
+//	public void login() {
+//		if (!this.isLoged) {
+//			System.out.println("Email: ");
+//			String email = sc.nextLine();
+//			System.out.println("Password: ");
+//			String psw = sc.nextLine();
+//			try {
+//				Registration reg = Registration.getRegistration(email);
+//				if (email.equals(reg.getEmail()) && psw.equals(reg.getPassword())) {
+//					this.isLoged = true;
+//					System.out.println("Uspeshno se lognahte v akaunta si");
+//				} else {
+//					System.out.println("Nevaliden email ili parola");
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+	
+	public static void login() throws Exception {
+		// if (!this.isLoged) {
+		System.out.println("Email: ");
+		String email = sc.nextLine();
+		if (Registration.registrationExists(email)) {
+			Registration reg = Registration.getRegistration(email);
+			if (isLoged(reg.getId())) {
+				System.out.println("Veche ste vlezli v akaunta si!");
+			} else {
+				System.out.println("Password: ");
+				String psw = sc.nextLine();
+				if (reg.getPassword().equals(psw)) {
+//					ArrayList<JSONObject> users = getAllUsers();
+//					for (JSONObject user : users) {
+//						if (reg.getId() == (long) user.get("Reg_id: ")) {
+//							// user.remove("Is loged: ");
+//							user.replace("Is loged: ", true);
+//							try (FileWriter file = new FileWriter("Users.json", true)) {
+//								removeLine(reg.getId());
+//								// file.append((user.toString()));
+//								System.out.println("Lognahte se uspeshno!");
+//							} catch (IOException e) {
+//								e.printStackTrace();
+//							}
+//						}
+//					}
+					System.out.println("Lognate se uspeshno");
+				}
+				else {
 					System.out.println("Nevaliden email ili parola");
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
+
 	}
-	// public static void login() throws Exception {
-	// // if (!this.isLoged) {
-	// System.out.println("Email: ");
-	// String email = sc.nextLine();
-	// if (Registration.registrationExists(email)) {
-	// Registration reg = Registration.getRegistration(email);
-	// if (isLoged(reg.getId())) {
-	// System.out.println("Veche ste vlezli v akaunta si!");
-	// } else {
-	// System.out.println("Password: ");
-	// String psw = sc.nextLine();
-	// if (reg.getPassword().equals(psw)) {
-	// ArrayList<JSONObject> users = getAllUsers();
-	// for (JSONObject user : users) {
-	// if (reg.getId() == (long) user.get("Reg_id: ")) {
-	// // user.remove("Is loged: ");
-	// user.replace("Is loged: ", true);
-	// try (FileWriter file = new FileWriter("Users.json", true)) {
-	// removeLine(reg.getId());
-	// // file.append((user.toString()));
-	// System.out.println("Lognahte se uspeshno!");
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
-	// }
-	// }
-	// }
-	//
-	// }
 
 	// static void removeLine(Long regId) throws IOException {
 	// File file = new File("Users.json");
@@ -232,28 +243,28 @@ public class User {
 		o.confirm(address, phone);
 	}
 
-	public boolean isLoged() {
-		return isLoged;
-	}
+//	public boolean isLoged() {
+//		return isLoged;
+//	}
 
-	// static boolean isLoged(long id) {
-	// ArrayList<JSONObject> users;
-	// try {
-	// users = getAllUsers();
-	// for (JSONObject jo : users) {
-	// if (id == (Long) jo.get("Reg_id: ")) {
-	// if ((Boolean) jo.get("Is loged: ") == true) {
-	// return true;
-	// }
-	// return false;
-	// }
-	// }
-	// return false;
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// return false;
-	// }
+	static boolean isLoged(long id) {
+		ArrayList<JSONObject> users;
+		try {
+			users = getAllUsers();
+			for (JSONObject jo : users) {
+				if (id == (Long) jo.get("Reg_id: ")) {
+					if ((Boolean) jo.get("Is loged: ") == true) {
+						return true;
+					}
+					return false;
+				}
+			}
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {

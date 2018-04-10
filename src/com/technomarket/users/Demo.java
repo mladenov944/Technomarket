@@ -1,5 +1,7 @@
 package com.technomarket.users;
 
+import com.technomarket.products.SearchBar;
+
 public class Demo {
 
 	public static void main(String[] args) {
@@ -26,26 +28,31 @@ public class Demo {
 		// "sasasasdasd", true));
 		// Order order = new Order(u3, new Basket(u3));
 
+		User user = User.generateUser();
 		try {
-			try {
-				User user = new User(new Registration("Pesho", "Georgiev", "pesho@yahoo.com", "Peshkata", false));
-			} catch (RegistrationException e) {
-				e.printStackTrace();
-			}
-			for (int i = 0; i < 10; i++) {
-				User user2 = User.generateUser();
-			}
-
-		} catch (UserException e) {
-			System.out.println(e.getMessage());
+			User.login();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
+		try {
+			SearchBar.readJsonFile();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		SearchBar.searchByPrice();
 		
-//		try {
-//			User.login();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+//		for (int i = 0; i < 10; i++) {
+//		User user2 = User.generateUser();
+//	}
+		
+		// try {
+		// User.login();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 }
