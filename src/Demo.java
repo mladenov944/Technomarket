@@ -1,8 +1,10 @@
 import com.technomarket.products.Product;
+import com.technomarket.products.SearchBar;
+import com.technomarket.users.UserException;
 
 public class Demo {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UserException {
 
 		// Product.showAllProducts();
 //		ITproducts.generateITproducts();
@@ -13,9 +15,14 @@ public class Demo {
 //		Product.generateProducts();
 //		Product.showAllProducts();
 
-		
-		Product.generateProducts();
-		Product.showAllProducts();
+//		
+//		Product.generateProducts();
+//		Product.showAllProducts();
+//		
+//		SearchBar.searchByPrice();
 
+		
+
+		
 	}
 }
