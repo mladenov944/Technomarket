@@ -65,6 +65,7 @@ public class Demo {
 				
 			case "buy":
 				u.buy();
+				ShopFunction.updateJsonFile();
 				break;
 			case "addproduct":
 				
@@ -74,10 +75,8 @@ public class Demo {
 				int kol = sc.nextInt();
 				Product temp = Product.getProductById(id3-1);
 				u.addToBasket(temp, kol);
-				ShopFunction.updateJsonFile();
-				System.out.println("Dobavihte v koshnicata : " + temp.toString());
-				
 				break;
+				
 			case "stop":
 				System.out.println("Spirame reklamite...");
 				reklamnaNishka.interrupt();
