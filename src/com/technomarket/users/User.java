@@ -24,8 +24,8 @@ public class User {
 	private static final String[] lastNames = { "Anastasov", "Ivanov", "Gospodinov", "Petkov", "Stoqnov", "Zahariev",
 			"Vasilev", "Pavlov", "Radev" };
 	private static final String[] domains = { "@abv.bg", "@yahoo.com", "@mail.bg", "@gmail.com", "@hotmail.com" };
-	private static final int MAX_MONEY = 15000;
-	private static final int MIN_MONEY = 1000;
+	private static final int MAX_MONEY = 3000;
+	private static final int MIN_MONEY = 100;
 
 	private static HashMap<Long, User> users = addJsonToUsers();
 	private Registration reg;
@@ -129,7 +129,10 @@ public class User {
 		try {
 			users.put(reg.getId(), this);
 			addUsersToJson();
+		} catch (IOException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -191,15 +194,14 @@ public class User {
 				&& (this.money >= (this.basket.calculatePrice() + (p.getPrice() * quantity)))) {
 			this.basket.addProduct(p, quantity);
 			// TUKA!!!!!!!!!!!!!
-			p.updateQuantity(p.getId()-1, quantity);		
-//			p.setAvailability(p.getAvailability() - quantity);
+			p.updateQuantity(p.getId(), quantity);
+			// p.setAvailability(p.getAvailability() - quantity);
 			if (quantity == 0) {
 				Product.removeProduct(p.getId());
-			} 
+			} else {
+				System.out.println("Produkta ne moje da bude dobaven v koshnicata");
+			}
 
-		} else {
-			System.out.println(this.money);
-			System.out.println("Produkta ne moje da bude dobaven v koshnicata");
 		}
 	}
 
