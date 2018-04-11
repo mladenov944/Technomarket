@@ -120,6 +120,12 @@ public class User {
 		// System.out.println(user.toString());
 	}
 
+	User(boolean isLoged, boolean isAdmin) {
+		this.isLoged = isLoged;
+		this.isAdmin = isAdmin;
+		this.basket = new Basket(this);
+	}
+
 	private boolean userExists(Registration reg) {
 		for (Long id : users.keySet()) {
 			if (reg.getId() == id) {
@@ -315,10 +321,11 @@ public class User {
 		try {
 			ArrayList<JSONObject> usersFromJson = new ArrayList<JSONObject>(getAllUsers());
 			for (JSONObject user : usersFromJson) {
-				users.put((Long) user.get("Reg_id: "),
-						new User(false, (Boolean) user.get("Is admin: ")));
+				// users.put((Long) user.get("Reg_id: "),
+				// new User(false, (Boolean) user.get("Is admin: ")));
 				users.put((Long) user.get("Reg_id: "), new User(false, (Boolean) user.get("Is admin: ")));
-				//za vseki novodobaven user ot Users.json mu se pulni orders s poruchki ot Orders.json
+				// za vseki novodobaven user ot Users.json mu se pulni orders s poruchki ot
+				// Orders.json
 				users.get(user.get("Reg_id: ")).addJsonToOrders();
 			}
 		} catch (Exception e) {
@@ -371,11 +378,6 @@ public class User {
 		}
 	}
 	// }
-
-	User(boolean isLoged, boolean isAdmin) {
-		this.isLoged = isLoged;
-		this.isAdmin = isAdmin;
-	}
 
 	public void setMoney(double money) {
 		if (money >= 0)
