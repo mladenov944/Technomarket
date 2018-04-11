@@ -37,6 +37,7 @@ public class User {
 	private Map<Long, Order> orders;
 	static Scanner sc = new Scanner(System.in);
 	private double money;
+	private boolean isAdmin = false;;
 
 	public User(Registration reg) throws UserException {
 		if (userExists(reg)) {
@@ -81,6 +82,9 @@ public class User {
 		String lastName = sc.nextLine();
 		System.out.println("Enter email: ");
 		String mail = sc.nextLine();
+		if (mail.toLowerCase().startsWith("admin")) {
+			this.isAdmin = true;
+		}
 		System.out.println("Enter password: ");
 		String psw = sc.nextLine();
 		System.out.println("m/f: ");
@@ -92,16 +96,27 @@ public class User {
 		Registration reg;
 		try {
 			reg = new Registration(firstName, lastName, mail, psw, isMale);
+			if (userExists(reg)) {
+				throw new UserException("Takuv user sushtestvuva!");
+			}
 		} catch (UserException | RegistrationException e) {
 			System.out.println(e.getMessage());
 			return;
 		}
+		this.reg = reg;
+		this.basket = new Basket(this);
+		this.orders = new HashMap<Long, Order>();
+		this.isLoged = false;
+		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
 		try {
-			User user = new User(reg);
-			System.out.println(user.toString());
-		} catch (UserException e) {
-			System.out.println(e.getMessage());
+			users.put(reg.getId(), this);
+			addUsersToJson();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		// System.out.println(user.toString());
 	}
 
 	private boolean userExists(Registration reg) {
@@ -159,7 +174,7 @@ public class User {
 		}
 	}
 
-	public static void login() throws Exception {
+	public static User login() throws Exception {
 		System.out.println("Email: ");
 		String email = sc.nextLine();
 		if (Registration.registrationExists(email)) {
@@ -168,6 +183,7 @@ public class User {
 			User user = getUserByID(reg.getId());
 			if (user.isLoged) {
 				System.out.println("Veche ste vlezli v akaunta si!");
+				return user;
 			} else {
 				System.out.println("Password: ");
 				String psw = sc.nextLine();
@@ -177,20 +193,23 @@ public class User {
 					users.put(reg.getId(), user);
 					addUsersToJson();
 					System.out.println("Lognahte se uspeshno");
+					return user;
 				} else {
 					System.out.println("Nevaliden email ili parola");
+					return null;
 				}
 			}
 		} else {
 			System.out.println("Nevaliden email ili parola");
+			return null;
 		}
 	}
 
-	public void logout() {
-		if (this.isLoged) {
-			this.isLoged = false;
-			users.remove(this.reg.getId());
-			users.put(this.reg.getId(), this);
+	public static void logout(long id) {
+		if (users.get(id).isLoged) {
+			users.get(id).isLoged = false;
+			users.remove(users.get(id).reg.getId());
+			users.put(users.get(id).reg.getId(), users.get(id));
 			try {
 				addUsersToJson();
 			} catch (IOException e) {
@@ -249,12 +268,13 @@ public class User {
 		for (Long id : users.keySet()) {
 			jsonObject.addProperty("Reg_id: ", id);
 			jsonObject.addProperty("Is loged: ", users.get(id).isLoged);
+			jsonObject.addProperty("Is admin: ", users.get(id).isAdmin);
 			fileWriter.append(jsonObject.toString());
 			fileWriter.append("\r\n");
 		}
 		fileWriter.flush();
 		fileWriter.close();
-		System.out.println("User added to file!");
+		// System.out.println("User added to file!");
 	}
 
 	static HashMap<Long, User> addJsonToUsers() {
@@ -281,6 +301,10 @@ public class User {
 
 	public boolean isLoged() {
 		return isLoged;
+	}
+
+	public long getId() {
+		return this.reg.getId();
 	}
 
 	@Override
