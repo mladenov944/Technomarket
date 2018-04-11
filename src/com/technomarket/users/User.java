@@ -150,6 +150,26 @@ public class User {
 		return Collections.unmodifiableList(json);
 	}
 
+	static List<JSONObject> getAllOrders() throws Exception {
+		List<JSONObject> json = new ArrayList<JSONObject>();
+		JSONObject obj;
+		String line = null;
+		File file = new File("Orders.json");
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		FileReader fileReader = new FileReader(file);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		while ((line = bufferedReader.readLine()) != null) {
+			obj = (JSONObject) new JSONParser().parse(line);
+			json.add(obj);
+		}
+		bufferedReader.close();
+		return Collections.unmodifiableList(json);
+	}
+	
+	
+	
 	public void addToBasket(Product p, int quantity) {
 		while (!this.isLoged) {
 			System.out.println("Za da dobavite produkt v kolichkata, purvo vlezte v acaunta si");
@@ -238,6 +258,14 @@ public class User {
 			confirmOrder(o);
 			this.setMoney(this.money - o.getPrice());
 			orders.add(o);
+			
+			//Vsqka dobavena poruchka obnovqva json faila Orders
+			try {
+				addOrdersToFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			//poruchkata e potvurdena i koshnicata se prazni
 			basket.empty();
 
 		} catch (OrderException e) {
@@ -289,7 +317,7 @@ public class User {
 			ArrayList<JSONObject> usersFromJson = new ArrayList<JSONObject>(getAllUsers());
 			for (JSONObject user : usersFromJson) {
 				users.put((Long) user.get("Reg_id: "),
-						new User((Boolean) user.get("Is loged: "), (Boolean) user.get("Is admin: ")));
+						new User(false, (Boolean) user.get("Is admin: ")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -297,6 +325,7 @@ public class User {
 		return users;
 	}
 
+	// ODERS to JSON ???
 	static void addOrdersToFile() throws IOException {
 		File file = new File("Orders.json");
 		file.createNewFile();
@@ -307,16 +336,55 @@ public class User {
 			jsonObject.addProperty("USER: ", user.toString());
 
 			for (Order o : user.orders) {
-
+				jsonObject.add("ORDER", o.addOrederToJson());
+				fileWriter.append(jsonObject.toString());
+				fileWriter.append("\r\n");
 			}
-			jsonObject.addProperty("Is loged: ", users.get(id).isLoged);
-			jsonObject.addProperty("Is admin: ", users.get(id).isAdmin);
 			fileWriter.append(jsonObject.toString());
 			fileWriter.append("\r\n");
 		}
 		fileWriter.flush();
 		fileWriter.close();
-		// System.out.println("User added to file!");
+	}
+
+	static ArrayList<Order> addJsonToOrders() {
+		
+		for (Long id : users.keySet()) {
+			User user = users.get(id);
+			user.orders=new ArrayList<Order>();
+			
+			try {
+				ArrayList<JSONObject> ordersFromJson = new ArrayList<JSONObject>(getAllOrders());
+				for (JSONObject order : ordersFromJson) {
+					if((Long)order.get("User id: ")==user.getId()) {
+						user.orders.add(new Order(user, (Long)order.get("Order No.: "), user.getId(), (Double)order.get("Cena "), order.))
+					}
+					user.orders.add(new Order(user, order.get("ORDER").));
+					order.get("ORDER"));
+							(Long) user.get("Reg_id: "),
+							new User((Boolean) user.get("Is loged: "), (Boolean) user.get("Is admin: ")));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		
+		
+		
+		users = new HashMap<Long, User>();
+		try {
+			ArrayList<JSONObject> usersFromJson = new ArrayList<JSONObject>(getAllUsers());
+			for (JSONObject user : usersFromJson) {
+				users.put((Long) user.get("Reg_id: "),
+						new User((Boolean) user.get("Is loged: "), (Boolean) user.get("Is admin: ")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return users;
 	}
 
 	User(boolean isLoged, boolean isAdmin) {

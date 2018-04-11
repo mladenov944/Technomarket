@@ -39,6 +39,27 @@ public class Order {
 		this.price = basket.calculatePrice();
 		id++;
 	}
+	
+	//Vtori konstruktor za nalivane na vsqka poruchka ot json-a v user.orders  Basket posle
+	//Kato vtoriq konstruktor pri Registration
+	public Order(User user, Long orderId, Long userId, Double price, String address, String phone, LocalDate confirmDate, LocalDate deliveryDate, JsonObject jsonProducts) throws OrderException {
+//		if ((user == null) || (basket == null)) {
+//			throw new OrderException("Nevalidna poruchka");
+//		}
+//		if (basket.getBasketSize() <= 0) {
+//			throw new OrderException("Koshnicata e prazna");
+//		}
+		this.user = user;
+		//this.basket = basket;
+		this.price = price;
+		this.deliveryAddress=address;
+		this.phoneNumber=phone;
+		this.confirmDate=confirmDate;
+		this.deliveryDate=deliveryDate;
+		this.orderID=id;
+		
+	}
+	
 
 	void confirm(String address, String phone) throws OrderException {
 		if (IData.checkString(address) && IData.checkPhone(phone)) {
@@ -76,9 +97,12 @@ public class Order {
 		// FileWriter fileWriter = new FileWriter(file);
 		ArrayList<Product> productsInBasket = new ArrayList<Product>(basket.getProducts());
 		jsonObject.addProperty("Order No.: ", this.orderID);
+		jsonObject.addProperty("User id: ", this.user.getId());
 		// jsonObject.addProperty("Na imeto na: ", this.user.getName());
 		jsonObject.addProperty("Cena ", this.price);
 		jsonObject.addProperty("Dostavka na adres: ", this.deliveryAddress);
+		jsonObject.addProperty("Telefon ", this.phoneNumber);
+		jsonObject.addProperty("Dostavkata e potvurdena na: ", this.confirmDate.toString());
 		jsonObject.addProperty("Data za dostavka: ", this.deliveryDate.toString());
 		JsonObject jsonProducts = new JsonObject();
 		for (Product p : productsInBasket) {
@@ -86,13 +110,9 @@ public class Order {
 			// fileWriter.append(jsonObject.toString());
 			// fileWriter.append("\r\n");
 		}
-
+//Tova mi e Basket-a
 		jsonObject.add("Zakupeni produkti: ", jsonProducts);
-
 		return jsonObject;
-		// fileWriter.flush();
-		// fileWriter.close();
-		// System.out.println("User added to file!");
 	}
 
 }
