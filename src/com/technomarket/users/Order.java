@@ -40,9 +40,9 @@ public class Order {
 		id++;
 	}
 	
-	//Vtori konstruktor za nalivane na vsqka poruchka ot json-a v user.orders  Basket posle
+	//Vtori konstruktor za nalivane na vsqka poruchka ot json-a v user.orders  Basket posle: s , JsonObject jsonProducts v konstruktora
 	//Kato vtoriq konstruktor pri Registration
-	public Order(User user, Long orderId, Long userId, Double price, String address, String phone, LocalDate confirmDate, LocalDate deliveryDate, JsonObject jsonProducts) throws OrderException {
+	public Order(User user, Long orderId, Long userId, Double price, String address, String phone, LocalDate confirmDate, LocalDate deliveryDate) throws OrderException {
 //		if ((user == null) || (basket == null)) {
 //			throw new OrderException("Nevalidna poruchka");
 //		}

@@ -10,7 +10,8 @@ public class Demo {
 	public static void main(String[] args) throws UserException {
 
 		User u = null;
-
+		long id = 0;
+		Product.generateProducts();
 		Thread reklamnaNishka = new Thread(new Commercial());
 		reklamnaNishka.start();
 
@@ -37,12 +38,13 @@ public class Demo {
 			case "login":
 				try {
 					u = User.login();
+					id = u.getId();
 				} catch (Exception e) {
 					System.out.println("Cannot login right now! Try again later!");
 				}
 				break;
 			case "logout":
-				// User.logout();
+				 User.logout(id);
 				break;
 			case "info":
 				System.out.println("Technomarket - sait prednaznachen za elektronni ustroistva");
@@ -61,6 +63,7 @@ public class Demo {
 			case "admin":
 				if (u.isAdmin()) {
 					System.out.println("Admin login!");
+					adminMenu();
 					Scanner sc2 = new Scanner(System.in);
 					String choice2 = sc2.nextLine().toLowerCase();
 
@@ -68,10 +71,9 @@ public class Demo {
 						switch (choice2) {
 						case "remove":
 							System.out.println("vuvedi ID:");
-							int id = sc.nextInt();
-							Product.removeProduct(id);
+							int productId = sc.nextInt();
+							Product.removeProduct(productId);
 							break;
-
 						default:
 							break;
 						}

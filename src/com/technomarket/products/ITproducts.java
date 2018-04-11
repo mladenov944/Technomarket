@@ -81,10 +81,7 @@ public abstract class ITproducts extends Product {
 				MobilePhone temp = new MobilePhone(mobileBrands[randomBrand], randomPrice, randomQuantity,
 						mobileModels[randomModel]);
 				mobilePhones.add(temp);
-
-				for (MobilePhone mp : mobilePhones) {
-					mps.add(mp);
-				}
+				mps.add(temp);
 
 			}
 			return mps;

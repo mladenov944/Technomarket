@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import org.json.simple.parser.JSONParser;
 
 import com.google.gson.JsonObject;
 import com.technomarket.products.Product;
-import com.technomarket.products.SearchBar;
+//import com.technomarket.products.SearchBar;
 
 public class User {
 
@@ -167,9 +167,7 @@ public class User {
 		bufferedReader.close();
 		return Collections.unmodifiableList(json);
 	}
-	
-	
-	
+
 	public void addToBasket(Product p, int quantity) {
 		while (!this.isLoged) {
 			System.out.println("Za da dobavite produkt v kolichkata, purvo vlezte v acaunta si");
@@ -258,14 +256,18 @@ public class User {
 			confirmOrder(o);
 			this.setMoney(this.money - o.getPrice());
 			orders.add(o);
-			
-			//Vsqka dobavena poruchka obnovqva json faila Orders
+			try {
+				addOrdersToFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			// Vsqka dobavena poruchka obnovqva json faila Orders
 			try {
 				addOrdersToFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			//poruchkata e potvurdena i koshnicata se prazni
+			// poruchkata e potvurdena i koshnicata se prazni
 			basket.empty();
 
 		} catch (OrderException e) {
@@ -316,8 +318,9 @@ public class User {
 		try {
 			ArrayList<JSONObject> usersFromJson = new ArrayList<JSONObject>(getAllUsers());
 			for (JSONObject user : usersFromJson) {
-				users.put((Long) user.get("Reg_id: "),
-						new User(false, (Boolean) user.get("Is admin: ")));
+				users.put((Long) user.get("Reg_id: "), new User(false, (Boolean) user.get("Is admin: ")));
+				//za vseki novodobaven user ot Users.json mu se pulni orders s poruchki ot Orders.json
+				users.get(user.get("Reg_id: ")).addJsonToOrders();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -347,45 +350,28 @@ public class User {
 		fileWriter.close();
 	}
 
-	static ArrayList<Order> addJsonToOrders() {
-		
-		for (Long id : users.keySet()) {
-			User user = users.get(id);
-			user.orders=new ArrayList<Order>();
-			
-			try {
-				ArrayList<JSONObject> ordersFromJson = new ArrayList<JSONObject>(getAllOrders());
-				for (JSONObject order : ordersFromJson) {
-					if((Long)order.get("User id: ")==user.getId()) {
-						user.orders.add(new Order(user, (Long)order.get("Order No.: "), user.getId(), (Double)order.get("Cena "), order.))
-					}
-					user.orders.add(new Order(user, order.get("ORDER").));
-					order.get("ORDER"));
-							(Long) user.get("Reg_id: "),
-							new User((Boolean) user.get("Is loged: "), (Boolean) user.get("Is admin: ")));
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		
-		
-		
-		
-		
-		users = new HashMap<Long, User>();
+	// Ot Json gi nalivam v kolekciqta user.orders ArrayList<Order>
+	void addJsonToOrders() {
+		//
+		// for (Long id : users.keySet()) {
+		// User user = users.get(id);
+		this.orders = new ArrayList<Order>();
+
 		try {
-			ArrayList<JSONObject> usersFromJson = new ArrayList<JSONObject>(getAllUsers());
-			for (JSONObject user : usersFromJson) {
-				users.put((Long) user.get("Reg_id: "),
-						new User((Boolean) user.get("Is loged: "), (Boolean) user.get("Is admin: ")));
+			ArrayList<JSONObject> ordersFromJson = new ArrayList<JSONObject>(getAllOrders());
+			for (JSONObject order : ordersFromJson) {
+				if ((Long) order.get("User id: ") == this.getId()) {
+					this.orders.add(new Order(this, (Long) order.get("Order No.: "), (Long) this.getId(),
+							(Double) order.get("Cena "), order.get("Dostavka na adres: ").toString(),
+							order.get("Telefon ").toString(), (LocalDate) order.get("Dostavkata e potvurdena na: "),
+							(LocalDate) order.get("Data za dostavka: ")));
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return users;
 	}
+	// }
 
 	User(boolean isLoged, boolean isAdmin) {
 		this.isLoged = isLoged;

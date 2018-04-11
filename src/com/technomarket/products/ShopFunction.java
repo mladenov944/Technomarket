@@ -1,31 +1,21 @@
 package com.technomarket.products;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.xml.crypto.Data;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.technomarket.products.HomeCareProducts.Iron;
-import com.technomarket.products.HomeCareProducts.Peralnq;
-import com.technomarket.products.HomeCareProducts.Prahosmukachka;
-import com.technomarket.products.ITproducts.Laptop;
-import com.technomarket.products.ITproducts.MobilePhone;
-import com.technomarket.products.ITproducts.Tablet;
-import com.technomarket.products.ITproducts.Television;
-import com.technomarket.products.OtherProducts.Pechka;
-import com.technomarket.products.OtherProducts.Toster;
 
-public abstract class SearchBar {
+
+public abstract class ShopFunction {
 
 	private static String keyword;
 	private static int minPrice;
@@ -70,15 +60,6 @@ public abstract class SearchBar {
 		}
 	}
 
-	public static void printCatalog() {
-		if (catalog.isEmpty()) {
-			makeCatalog();
-		}
-		for (Product p : catalog) {
-			System.out.println(p.toString());
-		}
-	}
-
 	public static void createJsonFile() throws Exception {
 		JsonObject jsonObject = new JsonObject();
 		FileWriter fileWriter = new FileWriter("Products.json");
@@ -117,6 +98,14 @@ public abstract class SearchBar {
 		}
 		bufferedReader.close();
 	}
+	//updates Json file when there is a purchase
+	public static void updateJsonFile() throws Exception {
+		File jsonFile = new File("Products.json");
+		if (jsonFile.exists()) {
+			jsonFile.delete();
+		}
+		createJsonFile();
+	}
 
 	public String getKeyword() {
 		return keyword;
@@ -124,31 +113,12 @@ public abstract class SearchBar {
 
 	public static void makeCatalog() {
 		// Put all products in the same place
-		catalog.addAll(MobilePhone.getMobilePhones());
-		catalog.addAll(Laptop.getLaptops());
-		catalog.addAll(Television.getTelevisions());
-		catalog.addAll(Tablet.getTablets());
-		catalog.addAll(Prahosmukachka.getPrahosmukachki());
-		catalog.addAll(Iron.getIrons());
-		catalog.addAll(Peralnq.getPeralni());
-		catalog.addAll(Toster.getTosteri());
-		catalog.addAll(Pechka.getPechki());
+		catalog.addAll(Product.generateProducts());
 	}
 
 	public static void getRandomProduct() throws Exception {
-		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
-		JSONObject obj;
-		String line = null;
-		FileReader fileReader = new FileReader("Products.json");
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		while ((line = bufferedReader.readLine()) != null) {
-			obj = (JSONObject) new JSONParser().parse(line);
-			json.add(obj);
-		}
-		bufferedReader.close();
-		int index = (int) (Math.random() * json.size());
-		System.out.println(json.get(index).toJSONString());
-		json.remove(index);
+		int index = (int) (Math.random() * catalog.size());
+		System.out.println(catalog.get(index).toString());
 	}
 
 	public static void setKeyword(String k) {
@@ -168,7 +138,7 @@ public abstract class SearchBar {
 		if (minPrice >= 0) {
 			minPrice = m;
 		} else {
-			System.out.println("Invalid price! Setting price to 0");
+			System.out.println("Invalid min price! Setting min price to 0.");
 			minPrice = 0;
 		}
 	}
@@ -177,13 +147,19 @@ public abstract class SearchBar {
 		return maxPrice;
 	}
 
-	// max price is minPrice + 1 until i have maxPrice of all
 	public static void setMaxPrice(int m) {
 		if (m > 0 && m > getMinPrice()) {
 			maxPrice = m;
 		} else {
 			System.out.println("Invalid max price!");
-			maxPrice = getMinPrice() + 1;
+			int tempIndex = 0;
+			for(int index = 0;index < catalog.size();index++) {
+				if(catalog.get(tempIndex).getPrice() <= catalog.get(index).getPrice()) {
+					tempIndex = index;
+				}
+			}
+			//price of most expensive product
+			maxPrice = (int) catalog.get(tempIndex).getPrice();
 		}
 	}
 }
