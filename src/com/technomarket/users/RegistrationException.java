@@ -2,9 +2,6 @@ package com.technomarket.users;
 
 public class RegistrationException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public RegistrationException() {
@@ -33,5 +30,4 @@ public class RegistrationException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 }

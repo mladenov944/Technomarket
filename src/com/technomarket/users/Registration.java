@@ -40,6 +40,7 @@ public class Registration {
 			setPassword(password);
 		} catch (UserException e) {
 			System.out.println(e.getMessage());
+			return;
 		}
 		try {
 			this.id = getNextID();
@@ -123,7 +124,7 @@ public class Registration {
 		}
 	}
 
-	private static ArrayList<JSONObject> getAllRegistrations() throws Exception {
+	static ArrayList<JSONObject> getAllRegistrations() throws Exception {
 		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
 		JSONObject obj;
 		String line = null;
@@ -175,6 +176,22 @@ public class Registration {
 		ArrayList<JSONObject> json = getAllRegistrations();
 		for (JSONObject jo : json) {
 			if (jo.get("Email: ").equals(email)) {
+				Long id = (Long) jo.get("User id: ");
+				String name = (String) jo.get("Name: ");
+				String mail = (String) jo.get("Email: ");
+				String password = (String) jo.get("Password: ");
+				boolean isMale = (Boolean) jo.get("Is male: ");
+				Registration registration = new Registration(id, name, mail, password, isMale);
+				return registration;
+			}
+		}
+		return null;
+	}
+
+	static Registration getRegistration(long Id) throws Exception {
+		ArrayList<JSONObject> json = getAllRegistrations();
+		for (JSONObject jo : json) {
+			if (jo.get("User id: ").equals(Id)) {
 				Long id = (Long) jo.get("User id: ");
 				String name = (String) jo.get("Name: ");
 				String mail = (String) jo.get("Email: ");

@@ -1,7 +1,9 @@
 package com.technomarket.products;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -12,9 +14,13 @@ abstract class OtherProducts extends Product {
 	}
 
 	// Generating all Other products
-		public static void generateOtherProducts() {
-			Toster.generateTosteri();
-			Pechka.generatePechki();
+		public static List<OtherProducts> generateOtherProducts() {
+			
+			List<OtherProducts> op = new ArrayList<OtherProducts>();
+			op.addAll(Toster.generateTosteri());
+			op.addAll(Pechka.generatePechki());
+			
+			return op;
 		}
 		
 	// Showing all Other products 
@@ -26,7 +32,7 @@ abstract class OtherProducts extends Product {
 		
 		// Nested class for Tosteri
 
-		protected static class Toster extends HomeCareProducts implements Comparable<Toster> {
+		protected static class Toster extends OtherProducts implements Comparable<Toster> {
 
 			public Toster(String brand, double price, int availability, String model) {
 				super("Toster ", brand, price, availability, model);
@@ -56,10 +62,12 @@ abstract class OtherProducts extends Product {
 				return (int) (this.getId() - t.getId());
 			}
 
-			public static void generateTosteri() {
+			public static List<Toster> generateTosteri() {
 				String[] TosterBrands = { "LG", "Panasonic", "Philips", "Beko" };
 				String[] TosterModels = { "Pro", "Ultra", "Slim", "Clean", "Lite" };
 
+				List<Toster> tosters = new ArrayList<Toster>();
+				
 				for (int count = 0; count < MAX_PRODUCTS; count++) {
 
 					int randomPrice = (int) (Math.random() * 100) + 10;
@@ -70,7 +78,9 @@ abstract class OtherProducts extends Product {
 					Toster temp = new Toster(TosterBrands[randomBrand], randomPrice, randomQuantity,
 							TosterModels[randomModel]);
 					tosteri.add(temp);
+					tosters.add(temp);
 				}
+				return tosters;
 			}
 
 			public static Set<Toster> getTosteri() {
@@ -85,9 +95,9 @@ abstract class OtherProducts extends Product {
 
 		}
 		
-		// Nested class for Prahosmukachki
+		// Nested class for Pechka
 
-		protected static class Pechka extends HomeCareProducts implements Comparable<Pechka> {
+		protected static class Pechka extends OtherProducts implements Comparable<Pechka> {
 
 			public Pechka(String brand, double price, int availability, String model) {
 				super("Pechka ", brand, price, availability, model);
@@ -117,10 +127,12 @@ abstract class OtherProducts extends Product {
 				return this.getId()-p.getId();
 			}
 
-			public static void generatePechki() {
+			public static List<Pechka> generatePechki() {
 				String[] PechkaBrands = { "LG","Philips", "Beko", "Kercher", "Bosch"};
 				String[] PechkaModels = { "Pro", "Ultra", "Slim", "Fire", "Lite" };
 
+				List<Pechka> pechkis = new ArrayList<Pechka>();
+				
 				for (int count = 0; count < MAX_PRODUCTS; count++) {
 
 					int randomPrice = (int) (Math.random() * 500) + 60;
@@ -131,7 +143,9 @@ abstract class OtherProducts extends Product {
 					Pechka temp = new Pechka(PechkaBrands[randomBrand], randomPrice, randomQuantity,
 							PechkaModels[randomModel]);
 					pechki.add(temp);
+					pechkis.add(temp);
 				}
+				return pechkis;
 			}
 
 			public static Set<Pechka> getPechki() {

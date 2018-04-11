@@ -5,8 +5,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -15,6 +18,7 @@ import org.json.simple.parser.JSONParser;
 
 import com.google.gson.JsonObject;
 import com.technomarket.products.Product;
+import com.technomarket.products.SearchBar;
 
 public class User {
 
@@ -23,32 +27,39 @@ public class User {
 	private static final String[] lastNames = { "Anastasov", "Ivanov", "Gospodinov", "Petkov", "Stoqnov", "Zahariev",
 			"Vasilev", "Pavlov", "Radev" };
 	private static final String[] domains = { "@abv.bg", "@yahoo.com", "@mail.bg", "@gmail.com", "@hotmail.com" };
+	private static final int MAX_MONEY = 3000;
+	private static final int MIN_MONEY = 100;
 
-	private HashMap<Long, Boolean> users = new HashMap<>();
-
+	private static HashMap<Long, User> users = addJsonToUsers();
 	private Registration reg;
 	private Basket basket;
 	private boolean isLoged;
 	private Map<Long, Order> orders;
 	static Scanner sc = new Scanner(System.in);
+	private double money;
+	private boolean isAdmin = false;;
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
 
 	public User(Registration reg) throws UserException {
 		if (userExists(reg)) {
 			throw new UserException("Takuv user sushtestvuva!");
 		}
 		this.reg = reg;
+		this.basket = new Basket(this);
+		this.orders = new HashMap<Long, Order>();
+		this.isLoged = false;
+		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
 		try {
-			// addUserToFile(reg.getId(), false);
-			users.put(reg.getId(), false);
+			users.put(reg.getId(), this);
 			addUsersToJson();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.basket = new Basket(this);
-		this.orders = new HashMap<Long, Order>();
-		this.isLoged = false;
 	}
 
 	public static User generateUser() {
@@ -68,6 +79,50 @@ public class User {
 		return user;
 	}
 
+	public User() {
+		System.out.println("First name: ");
+		String firstName = sc.nextLine();
+		System.out.println("Last name: ");
+		String lastName = sc.nextLine();
+		System.out.println("Enter email: ");
+		String mail = sc.nextLine();
+		if (mail.toLowerCase().startsWith("admin")) {
+			this.isAdmin = true;
+		}
+		System.out.println("Enter password: ");
+		String psw = sc.nextLine();
+		System.out.println("m/f: ");
+		char male = sc.next().charAt(0);
+		boolean isMale = true;
+		if (male == 'f') {
+			isMale = false;
+		}
+		Registration reg;
+		try {
+			reg = new Registration(firstName, lastName, mail, psw, isMale);
+			if (userExists(reg)) {
+				throw new UserException("Takuv user sushtestvuva!");
+			}
+		} catch (UserException | RegistrationException e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+		this.reg = reg;
+		this.basket = new Basket(this);
+		this.orders = new HashMap<Long, Order>();
+		this.isLoged = false;
+		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
+		try {
+			users.put(reg.getId(), this);
+			addUsersToJson();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// System.out.println(user.toString());
+	}
+
 	private boolean userExists(Registration reg) {
 		for (Long id : users.keySet()) {
 			if (reg.getId() == id) {
@@ -77,8 +132,8 @@ public class User {
 		return false;
 	}
 
-	static ArrayList<JSONObject> getAllUsers() throws Exception {
-		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
+	static List<JSONObject> getAllUsers() throws Exception {
+		List<JSONObject> json = new ArrayList<JSONObject>();
 		JSONObject obj;
 		String line = null;
 		File file = new File("Users.json");
@@ -92,20 +147,20 @@ public class User {
 			json.add(obj);
 		}
 		bufferedReader.close();
-		return json;
+		return Collections.unmodifiableList(json);
 	}
 
 	public void addToBasket(Product p, int quantity) {
 		while (!this.isLoged) {
 			System.out.println("Za da dobavite produkt v kolichkata, purvo vlezte v acaunta si");
 			try {
-				this.login();
+				login();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		if ((p != null) && (quantity > 0) && (p.getAvailability() >= quantity)) {
+		if ((p != null) && (quantity > 0) && (p.getAvailability() >= quantity)
+				&& (this.money >= (this.basket.calculatePrice() + (p.getPrice() * quantity)))) {
 			this.basket.addProduct(p, quantity);
 			p.setAvailability(p.getAvailability() - quantity);
 			if (quantity == 0) {
@@ -123,31 +178,57 @@ public class User {
 		}
 	}
 
-	public static void login() throws Exception {
-		// if (!this.isLoged) {
+	public static User login() throws Exception {
 		System.out.println("Email: ");
 		String email = sc.nextLine();
 		if (Registration.registrationExists(email)) {
 			Registration reg = Registration.getRegistration(email);
-			if (isLoged(reg.getId())) {
+
+			User user = getUserByID(reg.getId());
+			if (user.isLoged) {
 				System.out.println("Veche ste vlezli v akaunta si!");
+				return user;
 			} else {
 				System.out.println("Password: ");
 				String psw = sc.nextLine();
 				if (reg.getPassword().equals(psw)) {
-					System.out.println("Lognate se uspeshno");
+					user.isLoged = true;
+					users.remove(reg.getId());
+					users.put(reg.getId(), user);
+					addUsersToJson();
+					System.out.println("Lognahte se uspeshno");
+					return user;
 				} else {
 					System.out.println("Nevaliden email ili parola");
+					return null;
 				}
 			}
+		} else {
+			System.out.println("Nevaliden email ili parola");
+			return null;
 		}
-
 	}
 
-	public void logout() {
-		if (this.isLoged) {
-			this.isLoged = false;
+	public static void logout(long id) {
+		if (users.get(id).isLoged) {
+			users.get(id).isLoged = false;
+			users.remove(users.get(id).reg.getId());
+			users.put(users.get(id).reg.getId(), users.get(id));
+			try {
+				addUsersToJson();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+	}
+
+	static User getUserByID(long id) {
+		for (long regId : users.keySet()) {
+			if (id == regId) {
+				return users.get(regId);
+			}
+		}
+		return null;
 	}
 
 	public void buy() {
@@ -155,6 +236,7 @@ public class User {
 			Order o = new Order(this, this.basket);
 			System.out.println(o.toString() + '\n' + "Molq potvurdete poruchkata");
 			confirmOrder(o);
+			this.setMoney(this.money - o.getPrice());
 			orders.put(o.getOrderID(), o);
 			basket.empty();
 		} catch (OrderException e) {
@@ -171,38 +253,62 @@ public class User {
 	}
 
 	static boolean isLoged(long id) {
-		ArrayList<JSONObject> users;
-		try {
-			users = getAllUsers();
-			for (JSONObject jo : users) {
-				if (id == (Long) jo.get("Reg_id: ")) {
-					if ((Boolean) jo.get("Is loged: ") == true) {
-						return true;
-					}
-					return false;
+		for (long uId : users.keySet()) {
+			if (id == uId) {
+				if (users.get(uId).isLoged == true) {
+					return true;
 				}
+				return false;
 			}
-			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
 
-	private void addUsersToJson() throws IOException {
+	static void addUsersToJson() throws IOException {
 		File file = new File("Users.json");
 		file.createNewFile();
 		JsonObject jsonObject = new JsonObject();
-		FileWriter fileWriter = new FileWriter(file, true);
+		FileWriter fileWriter = new FileWriter(file);
 		for (Long id : users.keySet()) {
 			jsonObject.addProperty("Reg_id: ", id);
-			jsonObject.addProperty("Is loged: ", users.get(id));
+			jsonObject.addProperty("Is loged: ", users.get(id).isLoged);
+			jsonObject.addProperty("Is admin: ", users.get(id).isAdmin);
 			fileWriter.append(jsonObject.toString());
 			fileWriter.append("\r\n");
 		}
 		fileWriter.flush();
 		fileWriter.close();
-		System.out.println("User added to file!");
+		// System.out.println("User added to file!");
+	}
+
+	static HashMap<Long, User> addJsonToUsers() {
+		users = new HashMap<Long, User>();
+		try {
+			ArrayList<JSONObject> usersFromJson = new ArrayList<JSONObject>(getAllUsers());
+			for (JSONObject user : usersFromJson) {
+				users.put((Long) user.get("Reg_id: "), new User((Boolean) user.get("Is loged: ")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	User(boolean isLoged) {
+		this.isLoged = isLoged;
+	}
+
+	public void setMoney(double money) {
+		if (money >= 0)
+			this.money = money;
+	}
+
+	public boolean isLoged() {
+		return isLoged;
+	}
+
+	public long getId() {
+		return this.reg.getId();
 	}
 
 	@Override
