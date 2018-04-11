@@ -1,4 +1,4 @@
-import com.technomarket.products.SearchBar;
+import com.technomarket.products.ShopFunction;
 
 public class Commercial extends Thread {
 
@@ -33,7 +33,7 @@ public class Commercial extends Thread {
 						System.out.println("----------------------------------------------------------------");
 						System.out.println("Kupete samo sega na udivitelna cena: ");
 						try {
-							SearchBar.getRandomProduct();
+							ShopFunction.getRandomProduct();
 						} catch (Exception e) {
 							System.out.println("Nqma nalichni namaleniq! Sajalqvame za tova.");
 							e.printStackTrace();

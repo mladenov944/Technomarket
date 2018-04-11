@@ -63,9 +63,9 @@ public abstract class ShopFunction {
 	public static void createJsonFile() throws Exception {
 		JsonObject jsonObject = new JsonObject();
 		FileWriter fileWriter = new FileWriter("Products.json");
-		if (catalog.isEmpty()) {
+
 			makeCatalog();
-		}
+		
 		for (Product p : catalog) {
 			jsonObject.addProperty("ID:", p.getId());
 			jsonObject.addProperty("Type:", p.getName());

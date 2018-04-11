@@ -2,13 +2,14 @@ package com.technomarket.products;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class Product {
 
 	protected static final int MAX_PRODUCTS = 10;
 
-	static List<Product> allProducts = new ArrayList<Product>();
+	private static List<Product> allProducts = new ArrayList<Product>();
 	
 	private final int id;
 	private static int staticId = 0;
@@ -27,14 +28,21 @@ public abstract class Product {
 		this.model = (model == null) ? "BezModel" : model;
 	}
 
-	public abstract void addProduct(String brand, double price, int availability, String model);
+	public static void addProduct(Product p) {
+		allProducts.add(p);
+	}
 
 	public static void removeProduct(int id) {
-		// TODO Auto-generated method stub
 		
+		Iterator<Product> removeIterator = allProducts.iterator();
+		while (removeIterator.hasNext()) {
+			Product currentElement = removeIterator.next();
+			if (id == currentElement.getId()) {
+				removeIterator.remove();
+			}
+		}
 	}
-	// public abstract void editProduct(int id);
-
+	
 	public int getId() {
 		return id;
 	}
@@ -72,15 +80,14 @@ public abstract class Product {
 			allProducts.addAll(HomeCareProducts.generateHomeCareProducts());
 			allProducts.addAll(OtherProducts.generateOtherProducts());
 			try {
-				SearchBar.createJsonFile();
+				ShopFunction.createJsonFile();
 			} catch (Exception e) {
 				System.out.println("Json file could not be created!");
 			}
 			return allProducts;
 		} else {
-			System.out.println("Json file already exists!");
 			try {
-				SearchBar.readJsonFile();
+				ShopFunction.readJsonFile();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -93,7 +100,7 @@ public abstract class Product {
 		File jsonFile = new File("Products.json");
 		if (jsonFile.exists()) {
 			try {
-				SearchBar.readJsonFile();
+				ShopFunction.readJsonFile();
 			} catch (Exception e) {
 				System.out.println("Cannot open Json file!" + e.getMessage());
 			}
@@ -107,9 +114,6 @@ public abstract class Product {
 
 		return "Product [ID: " + id + "  Type - " + name + "  Brand - " + brand + " Model: " + model + "   Price="
 				+ price + "lv,   Quantity: " + availability + "]";
-		// return "Product [ID: " + id + " Type - " + name + " Marka - " + brand + "
-		// Model: " +model + " Price=" + price + "lv, Quantity: "
-		// + availability + "]";
 
 	}
 }

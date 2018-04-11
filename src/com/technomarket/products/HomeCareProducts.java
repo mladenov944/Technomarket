@@ -32,7 +32,7 @@ public abstract class HomeCareProducts extends Product {
 
 	// Nested class for Prahosmukachki
 
-	protected static class Prahosmukachka extends HomeCareProducts implements Comparable<Prahosmukachka> {
+	public static class Prahosmukachka extends HomeCareProducts implements Comparable<Prahosmukachka> {
 
 		public Prahosmukachka(String brand, double price, int availability, String model) {
 			super("Prahosmukachka ", brand, price, availability, model);
@@ -40,8 +40,7 @@ public abstract class HomeCareProducts extends Product {
 
 		private static Set<Prahosmukachka> prahosmukachki = new TreeSet<Prahosmukachka>();
 
-		@Override
-		public void addProduct(String brand, double price, int availability, String model) {
+		public  void addProduct(String brand, double price, int availability, String model) {
 			prahosmukachki.add(new Prahosmukachka(brand, price, availability, model));
 		}
 
@@ -100,7 +99,7 @@ public abstract class HomeCareProducts extends Product {
 
 	// Nested class for Irons
 
-	protected static class Iron extends HomeCareProducts implements Comparable<Iron> {
+	public static class Iron extends HomeCareProducts implements Comparable<Iron> {
 
 		public Iron(String brand, double price, int availability, String model) {
 			super("Utiq ", brand, price, availability, model);
@@ -112,22 +111,6 @@ public abstract class HomeCareProducts extends Product {
 			return Collections.unmodifiableSet(irons);
 		}
 
-		@Override
-		public void addProduct(String brand, double price, int availability, String model) {
-			irons.add(new Iron(brand, price, availability, model));
-		}
-
-//		@Override
-//		public void removeProduct(int id) {
-//			Iterator<Iron> removeIterator = irons.iterator();
-//			while (removeIterator.hasNext()) {
-//				Iron currentElement = removeIterator.next();
-//				if (id == currentElement.getId()) {
-//					removeIterator.remove();
-//				}
-//			}
-//
-//		}
 
 		@Override
 		public int compareTo(Iron iron) {
@@ -165,7 +148,7 @@ public abstract class HomeCareProducts extends Product {
 
 	// Nested class for Peralni
 
-	protected static class Peralnq extends HomeCareProducts implements Comparable<Peralnq> {
+	public static class Peralnq extends HomeCareProducts implements Comparable<Peralnq> {
 
 		public Peralnq(String brand, double price, int availability, String model) {
 			super("Peralnq ", brand, price, availability, model);
@@ -177,22 +160,6 @@ public abstract class HomeCareProducts extends Product {
 			return Collections.unmodifiableSet(peralni);
 		}
 
-		@Override
-		public void addProduct(String brand, double price, int availability, String model) {
-			peralni.add(new Peralnq(brand, price, availability, model));
-		}
-
-//		@Override
-//		public void removeProduct(int id) {
-//			Iterator<Peralnq> removeIterator = peralni.iterator();
-//			while (removeIterator.hasNext()) {
-//				Peralnq currentElement = removeIterator.next();
-//				if (id == currentElement.getId()) {
-//					removeIterator.remove();
-//				}
-//			}
-//
-//		}
 
 		@Override
 		public int compareTo(Peralnq peralnq) {
@@ -225,6 +192,7 @@ public abstract class HomeCareProducts extends Product {
 				System.out.println(p);
 			}
 		}
+
 
 	}
 

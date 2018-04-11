@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-abstract class OtherProducts extends Product {
+public abstract class OtherProducts extends Product {
 
 	public OtherProducts(String name, String brand, double price, int availability, String model) {
 		super(name, brand, price, availability, model);
@@ -32,30 +32,13 @@ abstract class OtherProducts extends Product {
 		
 		// Nested class for Tosteri
 
-		protected static class Toster extends OtherProducts implements Comparable<Toster> {
+		public static class Toster extends OtherProducts implements Comparable<Toster> {
 
 			public Toster(String brand, double price, int availability, String model) {
 				super("Toster ", brand, price, availability, model);
 			}
 
 			private static Set<Toster> tosteri = new TreeSet<Toster>();
-
-			@Override
-			public void addProduct(String brand, double price, int availability, String model) {
-				tosteri.add(new Toster(brand, price, availability, model));
-			}
-
-//			@Override
-//			public void removeProduct(int id) {
-//				Iterator<Toster> removeIterator = tosteri.iterator();
-//				while (removeIterator.hasNext()) {
-//					Toster currentElement = removeIterator.next();
-//					if (id == currentElement.getId()) {
-//						removeIterator.remove();
-//					}
-//				}
-//
-//			}
 
 			@Override
 			public int compareTo(Toster t) {
@@ -97,30 +80,13 @@ abstract class OtherProducts extends Product {
 		
 		// Nested class for Pechka
 
-		protected static class Pechka extends OtherProducts implements Comparable<Pechka> {
+		public static class Pechka extends OtherProducts implements Comparable<Pechka> {
 
 			public Pechka(String brand, double price, int availability, String model) {
 				super("Pechka ", brand, price, availability, model);
 			}
 
 			private static Set<Pechka> pechki = new TreeSet<Pechka>();
-
-			@Override
-			public void addProduct(String brand, double price, int availability, String model) {
-				pechki.add(new Pechka(brand, price, availability, model));
-			}
-
-//			@Override
-//			public void removeProduct(int id) {
-//				Iterator<Pechka> removeIterator = pechki.iterator();
-//				while (removeIterator.hasNext()) {
-//					Pechka currentElement = removeIterator.next();
-//					if (id == currentElement.getId()) {
-//						removeIterator.remove();
-//					}
-//				}
-//
-//			}
 
 			@Override
 			public int compareTo(Pechka p) {

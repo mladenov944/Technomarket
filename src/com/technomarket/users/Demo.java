@@ -1,7 +1,5 @@
 package com.technomarket.users;
 
-import com.technomarket.products.SearchBar;
-
 public class Demo {
 
 	public static void main(String[] args) {

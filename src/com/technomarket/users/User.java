@@ -5,20 +5,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 import com.google.gson.JsonObject;
 import com.technomarket.products.Product;
-import com.technomarket.products.SearchBar;
 
 public class User {
 
@@ -289,7 +285,7 @@ public class User {
 			ArrayList<JSONObject> usersFromJson = new ArrayList<JSONObject>(getAllUsers());
 			for (JSONObject user : usersFromJson) {
 				users.put((Long) user.get("Reg_id: "),
-						new User((Boolean) user.get("Is loged: "), (Boolean) user.get("Is admin: ")));
+						new User(false, (Boolean) user.get("Is admin: ")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
