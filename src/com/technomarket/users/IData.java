@@ -32,15 +32,14 @@ public abstract class IData {
 
 	static boolean checkPhone(String phone) {
 		boolean isValidNumber = true;
-		if (!checkString(phone) && (phone.length() != 10) && !phone.startsWith("08")) {
-			isValidNumber = false;
-		} else {
+		if (!checkString(phone) || (phone.length() != 10) || !phone.startsWith("08")) {
+			return false;
+		}
 			for (int i = 0; i < phone.length(); i++) {
-				if (phone.charAt(i) < '0' || phone.charAt(i) > 9) {
+				if (phone.charAt(i) < '0' || phone.charAt(i) > '9') {
 					isValidNumber = false;
 				}
 			}
-		}
 		return isValidNumber;
 	}
 }

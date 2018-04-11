@@ -120,20 +120,25 @@ public class User {
 		// System.out.println(user.toString());
 	}
 
-	User(boolean isLoged, boolean isAdmin) {
+	User(Long id, boolean isLoged, boolean isAdmin) {
 		this.isLoged = isLoged;
 		this.isAdmin = isAdmin;
 		this.basket = new Basket(this);
 		this.orders = new ArrayList<Order>();
-		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
 		try {
-			users.put(reg.getId(), this);
-			addUsersToJson();
-		} catch (IOException e) {
-			e.printStackTrace();
+			this.reg = Registration.getRegistration(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
+		// try {
+		users.put(reg.getId(), this);
+		// addUsersToJson();
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	private boolean userExists(Registration reg) {
@@ -335,7 +340,8 @@ public class User {
 			for (JSONObject user : usersFromJson) {
 				// users.put((Long) user.get("Reg_id: "),
 				// new User(false, (Boolean) user.get("Is admin: ")));
-				users.put((Long) user.get("Reg_id: "), new User(false, (Boolean) user.get("Is admin: ")));
+				users.put((Long) user.get("Reg_id: "),
+						new User((Long) user.get("Reg_id: "), false, (Boolean) user.get("Is admin: ")));
 				// za vseki novodobaven user ot Users.json mu se pulni orders s poruchki ot
 				// Orders.json
 				users.get(user.get("Reg_id: ")).addJsonToOrders();

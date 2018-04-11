@@ -39,32 +39,35 @@ public class Order {
 		this.price = basket.calculatePrice();
 		id++;
 	}
-	
-	//Vtori konstruktor za nalivane na vsqka poruchka ot json-a v user.orders  Basket posle: s , JsonObject jsonProducts v konstruktora
-	//Kato vtoriq konstruktor pri Registration
-	public Order(User user, Long orderId, Long userId, Double price, String address, String phone, LocalDate confirmDate, LocalDate deliveryDate) throws OrderException {
-//		if ((user == null) || (basket == null)) {
-//			throw new OrderException("Nevalidna poruchka");
-//		}
-//		if (basket.getBasketSize() <= 0) {
-//			throw new OrderException("Koshnicata e prazna");
-//		}
+
+	// Vtori konstruktor za nalivane na vsqka poruchka ot json-a v user.orders
+	// Basket posle: s , JsonObject jsonProducts v konstruktora
+	// Kato vtoriq konstruktor pri Registration
+	public Order(User user, Long orderId, Long userId, Double price, String address, String phone,
+			LocalDate confirmDate, LocalDate deliveryDate) throws OrderException {
+		// if ((user == null) || (basket == null)) {
+		// throw new OrderException("Nevalidna poruchka");
+		// }
+		// if (basket.getBasketSize() <= 0) {
+		// throw new OrderException("Koshnicata e prazna");
+		// }
 		this.user = user;
-		//this.basket = basket;
+		// this.basket = basket;
 		this.price = price;
-		this.deliveryAddress=address;
-		this.phoneNumber=phone;
-		this.confirmDate=confirmDate;
-		this.deliveryDate=deliveryDate;
-		this.orderID=id;
-		
+		this.deliveryAddress = address;
+		this.phoneNumber = phone;
+		this.confirmDate = confirmDate;
+		this.deliveryDate = deliveryDate;
+		this.orderID = id;
+
 	}
-	
 
 	void confirm(String address, String phone) throws OrderException {
 		if (IData.checkString(address) && IData.checkPhone(phone)) {
 			this.confirmDate = LocalDate.now();
 			this.deliveryDate = confirmDate.plusDays(DAYS_FOR_DELIVERY);
+			this.deliveryAddress = address;
+			this.phoneNumber = phone;
 			System.out.println(confirmToString());
 		} else {
 			throw new OrderException("Nevaliden adres ili telefon. Poruchkata ne e potvurdena");
@@ -110,7 +113,7 @@ public class Order {
 			// fileWriter.append(jsonObject.toString());
 			// fileWriter.append("\r\n");
 		}
-//Tova mi e Basket-a
+		// Tova mi e Basket-a
 		jsonObject.add("Zakupeni produkti: ", jsonProducts);
 		return jsonObject;
 	}

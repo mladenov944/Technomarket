@@ -1,0 +1,90 @@
+{"ID:":1,"Type:":"Mobile Phone","Brand:":"Huawei","Model:":"S10","Price:":667.0,"Quantity:":4}
+{"ID:":2,"Type:":"Mobile Phone","Brand:":"Lenovo","Model:":"Pro","Price:":561.0,"Quantity:":13}
+{"ID:":3,"Type:":"Mobile Phone","Brand:":"Motorola","Model:":"One","Price:":1124.0,"Quantity:":14}
+{"ID:":4,"Type:":"Mobile Phone","Brand:":"Sony","Model:":"S10","Price:":386.0,"Quantity:":0}
+{"ID:":5,"Type:":"Mobile Phone","Brand:":"Lenovo","Model:":"One","Price:":808.0,"Quantity:":17}
+{"ID:":6,"Type:":"Mobile Phone","Brand:":"Lenovo","Model:":"Super","Price:":840.0,"Quantity:":18}
+{"ID:":7,"Type:":"Mobile Phone","Brand:":"Sony","Model:":"One","Price:":838.0,"Quantity:":15}
+{"ID:":8,"Type:":"Mobile Phone","Brand:":"Asus","Model:":"Bussiness","Price:":809.0,"Quantity:":11}
+{"ID:":9,"Type:":"Mobile Phone","Brand:":"Huawei","Model:":"Bussiness","Price:":427.0,"Quantity:":15}
+{"ID:":10,"Type:":"Mobile Phone","Brand:":"Lenovo","Model:":"One","Price:":123.0,"Quantity:":4}
+{"ID:":11,"Type:":"Laptop","Brand:":"Toshiba","Model:":"Pro","Price:":2007.0,"Quantity:":5}
+{"ID:":12,"Type:":"Laptop","Brand:":"Mac","Model:":"One","Price:":1118.0,"Quantity:":9}
+{"ID:":13,"Type:":"Laptop","Brand:":"Mac","Model:":"One","Price:":1140.0,"Quantity:":16}
+{"ID:":14,"Type:":"Laptop","Brand:":"Lenovo","Model:":"Gaming","Price:":2425.0,"Quantity:":13}
+{"ID:":15,"Type:":"Laptop","Brand:":"Lenovo","Model:":"Bussiness","Price:":1925.0,"Quantity:":17}
+{"ID:":16,"Type:":"Laptop","Brand:":"Toshiba","Model:":"Bussiness","Price:":1792.0,"Quantity:":15}
+{"ID:":17,"Type:":"Laptop","Brand:":"HP","Model:":"Bussiness","Price:":1449.0,"Quantity:":5}
+{"ID:":18,"Type:":"Laptop","Brand:":"Toshiba","Model:":"Super","Price:":1608.0,"Quantity:":10}
+{"ID:":19,"Type:":"Laptop","Brand:":"Mac","Model:":"One","Price:":1953.0,"Quantity:":3}
+{"ID:":20,"Type:":"Laptop","Brand:":"Mac","Model:":"Super","Price:":1960.0,"Quantity:":10}
+{"ID:":21,"Type:":"Television","Brand:":"Philips","Model:":"HD","Price:":2242.0,"Quantity:":5}
+{"ID:":22,"Type:":"Television","Brand:":"LG","Model:":"HD","Price:":3209.0,"Quantity:":9}
+{"ID:":23,"Type:":"Television","Brand:":"Philips","Model:":"Led","Price:":786.0,"Quantity:":15}
+{"ID:":24,"Type:":"Television","Brand:":"Panasonic","Model:":"Oled","Price:":4262.0,"Quantity:":12}
+{"ID:":25,"Type:":"Television","Brand:":"Sony","Model:":"UHD","Price:":2948.0,"Quantity:":13}
+{"ID:":26,"Type:":"Television","Brand:":"Sony","Model:":"FullHD","Price:":2713.0,"Quantity:":16}
+{"ID:":27,"Type:":"Television","Brand:":"Philips","Model:":"Oled","Price:":2692.0,"Quantity:":9}
+{"ID:":28,"Type:":"Television","Brand:":"LG","Model:":"FullHD","Price:":2855.0,"Quantity:":8}
+{"ID:":29,"Type:":"Television","Brand:":"Samsung","Model:":"Oled","Price:":1613.0,"Quantity:":17}
+{"ID:":30,"Type:":"Television","Brand:":"Philips","Model:":"UHD","Price:":2278.0,"Quantity:":2}
+{"ID:":31,"Type:":"Tablet","Brand:":"Lenovo","Model:":"Bussiness","Price:":594.0,"Quantity:":10}
+{"ID:":32,"Type:":"Tablet","Brand:":"Mac","Model:":"Gaming","Price:":688.0,"Quantity:":13}
+{"ID:":33,"Type:":"Tablet","Brand:":"Toshiba","Model:":"One","Price:":745.0,"Quantity:":19}
+{"ID:":34,"Type:":"Tablet","Brand:":"Toshiba","Model:":"Bussiness","Price:":1009.0,"Quantity:":0}
+{"ID:":35,"Type:":"Tablet","Brand:":"Lenovo","Model:":"Super","Price:":606.0,"Quantity:":1}
+{"ID:":36,"Type:":"Tablet","Brand:":"Lenovo","Model:":"Super","Price:":1033.0,"Quantity:":19}
+{"ID:":37,"Type:":"Tablet","Brand:":"Toshiba","Model:":"Pro","Price:":251.0,"Quantity:":9}
+{"ID:":38,"Type:":"Tablet","Brand:":"Asus","Model:":"Super","Price:":275.0,"Quantity:":1}
+{"ID:":39,"Type:":"Tablet","Brand:":"Toshiba","Model:":"Gaming","Price:":697.0,"Quantity:":4}
+{"ID:":40,"Type:":"Tablet","Brand:":"Dell","Model:":"Super","Price:":627.0,"Quantity:":15}
+{"ID:":41,"Type:":"Prahosmukachka ","Brand:":"Beko","Model:":"Ultra","Price:":419.0,"Quantity:":1}
+{"ID:":42,"Type:":"Prahosmukachka ","Brand:":"Kercher","Model:":"Slim","Price:":186.0,"Quantity:":1}
+{"ID:":43,"Type:":"Prahosmukachka ","Brand:":"LG","Model:":"Ultra","Price:":153.0,"Quantity:":5}
+{"ID:":44,"Type:":"Prahosmukachka ","Brand:":"Panasonic","Model:":"Pro","Price:":451.0,"Quantity:":10}
+{"ID:":45,"Type:":"Prahosmukachka ","Brand:":"LG","Model:":"Slim","Price:":152.0,"Quantity:":3}
+{"ID:":46,"Type:":"Prahosmukachka ","Brand:":"Panasonic","Model:":"Clean","Price:":324.0,"Quantity:":10}
+{"ID:":47,"Type:":"Prahosmukachka ","Brand:":"LG","Model:":"Slim","Price:":98.0,"Quantity:":5}
+{"ID:":48,"Type:":"Prahosmukachka ","Brand:":"Panasonic","Model:":"Lite","Price:":546.0,"Quantity:":17}
+{"ID:":49,"Type:":"Prahosmukachka ","Brand:":"Samsung","Model:":"Clean","Price:":67.0,"Quantity:":0}
+{"ID:":50,"Type:":"Prahosmukachka ","Brand:":"Philips","Model:":"Clean","Price:":236.0,"Quantity:":2}
+{"ID:":51,"Type:":"Utiq ","Brand:":"Panasonic","Model:":"Pro","Price:":227.0,"Quantity:":6}
+{"ID:":52,"Type:":"Utiq ","Brand:":"Sony","Model:":"Clean","Price:":473.0,"Quantity:":13}
+{"ID:":53,"Type:":"Utiq ","Brand:":"Sony","Model:":"Lite","Price:":145.0,"Quantity:":8}
+{"ID:":54,"Type:":"Utiq ","Brand:":"LG","Model:":"Ultra","Price:":403.0,"Quantity:":19}
+{"ID:":55,"Type:":"Utiq ","Brand:":"Samsung","Model:":"Slim","Price:":539.0,"Quantity:":7}
+{"ID:":56,"Type:":"Utiq ","Brand:":"Philips","Model:":"Lite","Price:":275.0,"Quantity:":2}
+{"ID:":57,"Type:":"Utiq ","Brand:":"Panasonic","Model:":"Lite","Price:":483.0,"Quantity:":2}
+{"ID:":58,"Type:":"Utiq ","Brand:":"Samsung","Model:":"Clean","Price:":454.0,"Quantity:":6}
+{"ID:":59,"Type:":"Utiq ","Brand:":"Samsung","Model:":"Lite","Price:":159.0,"Quantity:":11}
+{"ID:":60,"Type:":"Utiq ","Brand:":"Bosch","Model:":"Ultra","Price:":100.0,"Quantity:":14}
+{"ID:":61,"Type:":"Peralnq ","Brand:":"Candy","Model:":"Lite","Price:":404.0,"Quantity:":12}
+{"ID:":62,"Type:":"Peralnq ","Brand:":"Candy","Model:":"Ultra","Price:":299.0,"Quantity:":2}
+{"ID:":63,"Type:":"Peralnq ","Brand:":"Litestart","Model:":"Clean","Price:":405.0,"Quantity:":10}
+{"ID:":64,"Type:":"Peralnq ","Brand:":"Candy","Model:":"Pro","Price:":70.0,"Quantity:":5}
+{"ID:":65,"Type:":"Peralnq ","Brand:":"Candy","Model:":"Clean","Price:":537.0,"Quantity:":14}
+{"ID:":66,"Type:":"Peralnq ","Brand:":"Samsung","Model:":"Lite","Price:":308.0,"Quantity:":10}
+{"ID:":67,"Type:":"Peralnq ","Brand:":"Litestart","Model:":"Ultra","Price:":443.0,"Quantity:":7}
+{"ID:":68,"Type:":"Peralnq ","Brand:":"Litestart","Model:":"Clean","Price:":319.0,"Quantity:":19}
+{"ID:":69,"Type:":"Peralnq ","Brand:":"Candy","Model:":"Pro","Price:":110.0,"Quantity:":16}
+{"ID:":70,"Type:":"Peralnq ","Brand:":"LG","Model:":"Pro","Price:":266.0,"Quantity:":14}
+{"ID:":71,"Type:":"Toster ","Brand:":"Beko","Model:":"Pro","Price:":55.0,"Quantity:":1}
+{"ID:":72,"Type:":"Toster ","Brand:":"Panasonic","Model:":"Clean","Price:":84.0,"Quantity:":1}
+{"ID:":73,"Type:":"Toster ","Brand:":"LG","Model:":"Clean","Price:":43.0,"Quantity:":2}
+{"ID:":74,"Type:":"Toster ","Brand:":"Panasonic","Model:":"Ultra","Price:":69.0,"Quantity:":14}
+{"ID:":75,"Type:":"Toster ","Brand:":"LG","Model:":"Clean","Price:":78.0,"Quantity:":15}
+{"ID:":76,"Type:":"Toster ","Brand:":"Beko","Model:":"Slim","Price:":105.0,"Quantity:":6}
+{"ID:":77,"Type:":"Toster ","Brand:":"LG","Model:":"Clean","Price:":69.0,"Quantity:":13}
+{"ID:":78,"Type:":"Toster ","Brand:":"Beko","Model:":"Pro","Price:":86.0,"Quantity:":18}
+{"ID:":79,"Type:":"Toster ","Brand:":"Panasonic","Model:":"Slim","Price:":28.0,"Quantity:":15}
+{"ID:":80,"Type:":"Toster ","Brand:":"LG","Model:":"Slim","Price:":63.0,"Quantity:":5}
+{"ID:":81,"Type:":"Pechka ","Brand:":"LG","Model:":"Lite","Price:":288.0,"Quantity:":9}
+{"ID:":82,"Type:":"Pechka ","Brand:":"Beko","Model:":"Pro","Price:":358.0,"Quantity:":3}
+{"ID:":83,"Type:":"Pechka ","Brand:":"Beko","Model:":"Pro","Price:":323.0,"Quantity:":18}
+{"ID:":84,"Type:":"Pechka ","Brand:":"Bosch","Model:":"Fire","Price:":218.0,"Quantity:":11}
+{"ID:":85,"Type:":"Pechka ","Brand:":"Kercher","Model:":"Ultra","Price:":316.0,"Quantity:":15}
+{"ID:":86,"Type:":"Pechka ","Brand:":"Kercher","Model:":"Slim","Price:":517.0,"Quantity:":16}
+{"ID:":87,"Type:":"Pechka ","Brand:":"LG","Model:":"Pro","Price:":536.0,"Quantity:":1}
+{"ID:":88,"Type:":"Pechka ","Brand:":"Kercher","Model:":"Pro","Price:":417.0,"Quantity:":11}
+{"ID:":89,"Type:":"Pechka ","Brand:":"Kercher","Model:":"Lite","Price:":395.0,"Quantity:":7}
+{"ID:":90,"Type:":"Pechka ","Brand:":"Kercher","Model:":"Fire","Price:":515.0,"Quantity:":2}
