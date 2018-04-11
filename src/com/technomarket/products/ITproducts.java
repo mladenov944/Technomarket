@@ -112,17 +112,17 @@ public abstract class ITproducts extends Product {
 			mobilePhones.add(new MobilePhone(brand, price, availability, model));
 		}
 
-		@Override
-		public void removeProduct(int id) {
-			Iterator<MobilePhone> removeIterator = mobilePhones.iterator();
-			while (removeIterator.hasNext()) {
-				MobilePhone currentElement = removeIterator.next();
-				if (id == currentElement.getId()) {
-					removeIterator.remove();
-				}
-			}
-
-		}
+//		@Override
+//		public void removeProduct(int id) {
+//			Iterator<MobilePhone> removeIterator = mobilePhones.iterator();
+//			while (removeIterator.hasNext()) {
+//				MobilePhone currentElement = removeIterator.next();
+//				if (id == currentElement.getId()) {
+//					removeIterator.remove();
+//				}
+//			}
+//
+//		}
 
 	}
 
@@ -178,16 +178,16 @@ public abstract class ITproducts extends Product {
 			laptops.add(new Laptop(brand, price, availability, model));
 		}
 
-		@Override
-		public void removeProduct(int id) {
-			Iterator<Laptop> removeIterator = laptops.iterator();
-			while (removeIterator.hasNext()) {
-				Laptop currentElement = removeIterator.next();
-				if (id == currentElement.getId()) {
-					removeIterator.remove();
-				}
-			}
-		}
+//		@Override
+//		public void removeProduct(int id) {
+//			Iterator<Laptop> removeIterator = laptops.iterator();
+//			while (removeIterator.hasNext()) {
+//				Laptop currentElement = removeIterator.next();
+//				if (id == currentElement.getId()) {
+//					removeIterator.remove();
+//				}
+//			}
+//		}
 
 	}
 
@@ -240,16 +240,16 @@ public abstract class ITproducts extends Product {
 			tablets.add(new Tablet(brand, price, availability, model));
 		}
 
-		@Override
-		public void removeProduct(int id) {
-			Iterator<Tablet> removeIterator = tablets.iterator();
-			while (removeIterator.hasNext()) {
-				Tablet currentElement = removeIterator.next();
-				if (id == currentElement.getId()) {
-					removeIterator.remove();
-				}
-			}
-		}
+//		@Override
+//		public void removeProduct(int id) {
+//			Iterator<Tablet> removeIterator = tablets.iterator();
+//			while (removeIterator.hasNext()) {
+//				Tablet currentElement = removeIterator.next();
+//				if (id == currentElement.getId()) {
+//					removeIterator.remove();
+//				}
+//			}
+//		}
 
 		public static Set<Tablet> getTablets() {
 			return Collections.unmodifiableSet(tablets);
@@ -306,16 +306,16 @@ public abstract class ITproducts extends Product {
 			televisions.add(new Television(brand, price, availability, model));
 		}
 
-		@Override
-		public void removeProduct(int id) {
-			Iterator<Television> removeIterator = televisions.iterator();
-			while (removeIterator.hasNext()) {
-				Television currentElement = removeIterator.next();
-				if (id == currentElement.getId()) {
-					removeIterator.remove();
-				}
-			}
-		}
+//		@Override
+//		public void removeProduct(int id) {
+//			Iterator<Television> removeIterator = televisions.iterator();
+//			while (removeIterator.hasNext()) {
+//				Television currentElement = removeIterator.next();
+//				if (id == currentElement.getId()) {
+//					removeIterator.remove();
+//				}
+//			}
+//		}
 
 		public static Set<Television> getTelevisions() {
 			return Collections.unmodifiableSet(televisions);
