@@ -170,7 +170,7 @@ public class User {
 		}
 	}
 
-	public static void login() throws Exception {
+	public static User login() throws Exception {
 		System.out.println("Email: ");
 		String email = sc.nextLine();
 		if (Registration.registrationExists(email)) {
@@ -179,6 +179,7 @@ public class User {
 			User user = getUserByID(reg.getId());
 			if (user.isLoged) {
 				System.out.println("Veche ste vlezli v akaunta si!");
+				return user;
 			} else {
 				System.out.println("Password: ");
 				String psw = sc.nextLine();
@@ -188,20 +189,23 @@ public class User {
 					users.put(reg.getId(), user);
 					addUsersToJson();
 					System.out.println("Lognahte se uspeshno");
+					return user;
 				} else {
 					System.out.println("Nevaliden email ili parola");
+					return null;
 				}
 			}
 		} else {
 			System.out.println("Nevaliden email ili parola");
+			return null;
 		}
 	}
 
-	public void logout() {
-		if (this.isLoged) {
-			this.isLoged = false;
-			users.remove(this.reg.getId());
-			users.put(this.reg.getId(), this);
+	public static void logout(long id) {
+		if (users.get(id).isLoged) {
+			users.get(id).isLoged = false;
+			users.remove(users.get(id).reg.getId());
+			users.put(users.get(id).reg.getId(), users.get(id));
 			try {
 				addUsersToJson();
 			} catch (IOException e) {
