@@ -32,7 +32,24 @@ public class Demo {
 				break;
 			case "login":
 				try {
-					User.login();
+					User u = User.login();
+					if (u.isAdmin()) {
+						System.out.println("Admin login!");
+						Scanner sc2 = new Scanner(System.in);
+						String choice2 = sc2.nextLine().toLowerCase();
+						
+						
+						while (true) {
+							switch (choice2) {
+							case "remove":
+								Product.removeProduct(5);
+								break;
+
+							default:
+								break;
+							}
+						}
+					}
 				} catch (Exception e) {
 					System.out.println("Cannot login right now! Try again later!");
 				}
@@ -75,5 +92,13 @@ public class Demo {
 		System.out.println("6. Za da se vurnete v menuto >>> menu");
 		System.out.println("7. Za da sprete reklamite >>> stop");
 		System.out.println("8. Za da izlezete >>> exit");
+	}
+	
+	private static void adminMenu() {
+		System.out.println("----------------ADMIN----------------");
+
+		System.out.println("1. Premahvane na produkt po id >>> remove");
+		System.out.println("2. Dobavqne >>> add");
+
 	}
 }

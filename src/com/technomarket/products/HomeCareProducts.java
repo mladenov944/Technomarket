@@ -1,7 +1,9 @@
 package com.technomarket.products;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -12,10 +14,14 @@ public abstract class HomeCareProducts extends Product {
 	}
 
 	// Generating all Homecare products
-	public static void generateHomeCareProducts() {
-		Prahosmukachka.generatePrahosmukachki();
-		Iron.generateIrons();
-		Peralnq.generatePeralni();
+	public static List<HomeCareProducts> generateHomeCareProducts() {
+		
+		List<HomeCareProducts> hcp = new ArrayList<HomeCareProducts>();
+		hcp.addAll(Prahosmukachka.generatePrahosmukachki());
+		hcp.addAll(Iron.generateIrons());
+		hcp.addAll(Peralnq.generatePeralni());
+		
+		return hcp;
 	}
 
 	public static void showAllHomeCareProducts() {
@@ -51,9 +57,11 @@ public abstract class HomeCareProducts extends Product {
 
 		}
 
-		public static void generatePrahosmukachki() {
+		public static List<Prahosmukachka> generatePrahosmukachki() {
 			String[] PrahosmukachkaBrands = { "LG", "Samsung", "Panasonic", "Philips", "Beko", "Kercher", "Sony" };
 			String[] PrahosmukachkaModels = { "Pro", "Ultra", "Slim", "Clean", "Lite" };
+			
+			List<Prahosmukachka> prahos = new ArrayList<Prahosmukachka>();
 
 			for (int count = 0; count < MAX_PRODUCTS; count++) {
 
@@ -66,6 +74,11 @@ public abstract class HomeCareProducts extends Product {
 						PrahosmukachkaModels[randomModel]);
 				prahosmukachki.add(temp);
 			}
+			
+			for (Prahosmukachka p : prahosmukachki) {
+				prahos.add(p);
+			}
+			return prahos;
 		}
 
 		public static Set<Prahosmukachka> getPrahosmukachki() {
@@ -121,9 +134,11 @@ public abstract class HomeCareProducts extends Product {
 			return (int) (this.getId() - iron.getId());
 		}
 
-		public static void generateIrons() {
+		public static List<Iron> generateIrons() {
 			String[] ironBrands = { "LG", "Samsung", "Panasonic", "Philips", "Sony", "Bosch" };
 			String[] ironModels = { "Pro", "Ultra", "Slim", "Clean", "Lite" };
+			
+			List<Iron> utii = new ArrayList<Iron>();
 
 			for (int count = 0; count < MAX_PRODUCTS; count++) {
 
@@ -134,7 +149,10 @@ public abstract class HomeCareProducts extends Product {
 
 				Iron temp = new Iron(ironBrands[randomBrand], randomPrice, randomQuantity, ironModels[randomModel]);
 				irons.add(temp);
+				utii.add(temp);
 			}
+			
+			return utii;
 		}
 
 		public static void showIrons() {
@@ -181,9 +199,11 @@ public abstract class HomeCareProducts extends Product {
 			return (int) (this.getId() - peralnq.getId());
 		}
 
-		public static void generatePeralni() {
+		public static List<Peralnq> generatePeralni() {
 			String[] peralnqBrands = { "LG", "Samsung", "Beko", "Candy", "Bosch", "Litestart" };
 			String[] peralnqModels = { "Pro", "Ultra", "Slim", "Clean", "Lite" };
+			
+			List<Peralnq> peralnis = new ArrayList<Peralnq>();
 
 			for (int count = 0; count < MAX_PRODUCTS; count++) {
 
@@ -195,7 +215,9 @@ public abstract class HomeCareProducts extends Product {
 				Peralnq temp = new Peralnq(peralnqBrands[randomBrand], randomPrice, randomQuantity,
 						peralnqModels[randomModel]);
 				peralni.add(temp);
+				peralnis.add(temp);
 			}
+			return peralnis;
 		}
 
 		public static void showPeralni() {
