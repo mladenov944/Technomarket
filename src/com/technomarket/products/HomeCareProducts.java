@@ -45,17 +45,17 @@ public abstract class HomeCareProducts extends Product {
 			prahosmukachki.add(new Prahosmukachka(brand, price, availability, model));
 		}
 
-		@Override
-		public void removeProduct(int id) {
-			Iterator<Prahosmukachka> removeIterator = prahosmukachki.iterator();
-			while (removeIterator.hasNext()) {
-				Prahosmukachka currentElement = removeIterator.next();
-				if (id == currentElement.getId()) {
-					removeIterator.remove();
-				}
-			}
-
-		}
+//		@Override
+//		public void removeProduct(int id) {
+//			Iterator<Prahosmukachka> removeIterator = prahosmukachki.iterator();
+//			while (removeIterator.hasNext()) {
+//				Prahosmukachka currentElement = removeIterator.next();
+//				if (id == currentElement.getId()) {
+//					removeIterator.remove();
+//				}
+//			}
+//
+//		}
 
 		public static List<Prahosmukachka> generatePrahosmukachki() {
 			String[] PrahosmukachkaBrands = { "LG", "Samsung", "Panasonic", "Philips", "Beko", "Kercher", "Sony" };
@@ -117,17 +117,17 @@ public abstract class HomeCareProducts extends Product {
 			irons.add(new Iron(brand, price, availability, model));
 		}
 
-		@Override
-		public void removeProduct(int id) {
-			Iterator<Iron> removeIterator = irons.iterator();
-			while (removeIterator.hasNext()) {
-				Iron currentElement = removeIterator.next();
-				if (id == currentElement.getId()) {
-					removeIterator.remove();
-				}
-			}
-
-		}
+//		@Override
+//		public void removeProduct(int id) {
+//			Iterator<Iron> removeIterator = irons.iterator();
+//			while (removeIterator.hasNext()) {
+//				Iron currentElement = removeIterator.next();
+//				if (id == currentElement.getId()) {
+//					removeIterator.remove();
+//				}
+//			}
+//
+//		}
 
 		@Override
 		public int compareTo(Iron iron) {
@@ -182,17 +182,17 @@ public abstract class HomeCareProducts extends Product {
 			peralni.add(new Peralnq(brand, price, availability, model));
 		}
 
-		@Override
-		public void removeProduct(int id) {
-			Iterator<Peralnq> removeIterator = peralni.iterator();
-			while (removeIterator.hasNext()) {
-				Peralnq currentElement = removeIterator.next();
-				if (id == currentElement.getId()) {
-					removeIterator.remove();
-				}
-			}
-
-		}
+//		@Override
+//		public void removeProduct(int id) {
+//			Iterator<Peralnq> removeIterator = peralni.iterator();
+//			while (removeIterator.hasNext()) {
+//				Peralnq currentElement = removeIterator.next();
+//				if (id == currentElement.getId()) {
+//					removeIterator.remove();
+//				}
+//			}
+//
+//		}
 
 		@Override
 		public int compareTo(Peralnq peralnq) {

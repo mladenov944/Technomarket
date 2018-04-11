@@ -27,7 +27,10 @@ public abstract class Product {
 
 	public abstract void addProduct(String brand, double price, int availability, String model);
 
-	public abstract void removeProduct(int id);
+	public static void removeProduct(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 	// public abstract void editProduct(int id);
 
 	public int getId() {
@@ -76,8 +79,13 @@ public abstract class Product {
 			return allProducts;
 		} else {
 			System.out.println("Json file already exists!");
-			return allProducts;
+			try {
+				SearchBar.readJsonFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		return allProducts;
 	}
 
 	// Showing all products

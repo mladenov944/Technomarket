@@ -45,17 +45,17 @@ abstract class OtherProducts extends Product {
 				tosteri.add(new Toster(brand, price, availability, model));
 			}
 
-			@Override
-			public void removeProduct(int id) {
-				Iterator<Toster> removeIterator = tosteri.iterator();
-				while (removeIterator.hasNext()) {
-					Toster currentElement = removeIterator.next();
-					if (id == currentElement.getId()) {
-						removeIterator.remove();
-					}
-				}
-
-			}
+//			@Override
+//			public void removeProduct(int id) {
+//				Iterator<Toster> removeIterator = tosteri.iterator();
+//				while (removeIterator.hasNext()) {
+//					Toster currentElement = removeIterator.next();
+//					if (id == currentElement.getId()) {
+//						removeIterator.remove();
+//					}
+//				}
+//
+//			}
 
 			@Override
 			public int compareTo(Toster t) {
@@ -110,17 +110,17 @@ abstract class OtherProducts extends Product {
 				pechki.add(new Pechka(brand, price, availability, model));
 			}
 
-			@Override
-			public void removeProduct(int id) {
-				Iterator<Pechka> removeIterator = pechki.iterator();
-				while (removeIterator.hasNext()) {
-					Pechka currentElement = removeIterator.next();
-					if (id == currentElement.getId()) {
-						removeIterator.remove();
-					}
-				}
-
-			}
+//			@Override
+//			public void removeProduct(int id) {
+//				Iterator<Pechka> removeIterator = pechki.iterator();
+//				while (removeIterator.hasNext()) {
+//					Pechka currentElement = removeIterator.next();
+//					if (id == currentElement.getId()) {
+//						removeIterator.remove();
+//					}
+//				}
+//
+//			}
 
 			@Override
 			public int compareTo(Pechka p) {
