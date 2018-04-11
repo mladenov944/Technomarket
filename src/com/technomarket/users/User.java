@@ -199,7 +199,7 @@ public class User {
 				&& (this.money >= (this.basket.calculatePrice() + (p.getPrice() * quantity)))) {
 			this.basket.addProduct(p, quantity);
 			// TUKA!!!!!!!!!!!!!
-			p.updateQuantity(p.getId(), quantity);
+			p.updateQuantity(p.getId() - 1, quantity);
 			// p.setAvailability(p.getAvailability() - quantity);
 			if (quantity == 0) {
 				Product.removeProduct(p.getId());
@@ -276,17 +276,6 @@ public class User {
 			confirmOrder(o);
 			this.setMoney(this.money - o.getPrice());
 			orders.add(o);
-			try {
-				addOrdersToFile();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			// Vsqka dobavena poruchka obnovqva json faila Orders
-			try {
-				addOrdersToFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 			// poruchkata e potvurdena i koshnicata se prazni
 			basket.empty();
 
@@ -342,60 +331,12 @@ public class User {
 				// new User(false, (Boolean) user.get("Is admin: ")));
 				users.put((Long) user.get("Reg_id: "),
 						new User((Long) user.get("Reg_id: "), false, (Boolean) user.get("Is admin: ")));
-				// za vseki novodobaven user ot Users.json mu se pulni orders s poruchki ot
-				// Orders.json
-				users.get(user.get("Reg_id: ")).addJsonToOrders();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return users;
 	}
-
-	// ODERS to JSON ???
-	static void addOrdersToFile() throws IOException {
-		File file = new File("Orders.json");
-		file.createNewFile();
-		JsonObject jsonObject = new JsonObject();
-		FileWriter fileWriter = new FileWriter(file);
-		for (Long id : users.keySet()) {
-			User user = users.get(id);
-			jsonObject.addProperty("USER: ", user.toString());
-
-			for (Order o : user.orders) {
-				jsonObject.add("ORDER", o.addOrederToJson());
-				fileWriter.append(jsonObject.toString());
-				fileWriter.append("\r\n");
-			}
-			fileWriter.append(jsonObject.toString());
-			fileWriter.append("\r\n");
-		}
-		fileWriter.flush();
-		fileWriter.close();
-	}
-
-	// Ot Json gi nalivam v kolekciqta user.orders ArrayList<Order>
-	void addJsonToOrders() {
-		//
-		// for (Long id : users.keySet()) {
-		// User user = users.get(id);
-		this.orders = new ArrayList<Order>();
-
-		try {
-			ArrayList<JSONObject> ordersFromJson = new ArrayList<JSONObject>(getAllOrders());
-			for (JSONObject order : ordersFromJson) {
-				if ((Long) order.get("User id: ") == this.getId()) {
-					this.orders.add(new Order(this, (Long) order.get("Order No.: "), (Long) this.getId(),
-							(Double) order.get("Cena "), order.get("Dostavka na adres: ").toString(),
-							order.get("Telefon ").toString(), (LocalDate) order.get("Dostavkata e potvurdena na: "),
-							(LocalDate) order.get("Data za dostavka: ")));
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	// }
 
 	public void setMoney(double money) {
 		if (money >= 0)

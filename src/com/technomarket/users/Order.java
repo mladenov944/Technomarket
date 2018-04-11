@@ -24,7 +24,6 @@ public class Order {
 	private String phoneNumber;
 	private LocalDate confirmDate;
 	private LocalDate deliveryDate;
-	// private static ArrayList<Order> users = addJsonToUsers();
 
 	public Order(User user, Basket basket) throws OrderException {
 		if ((user == null) || (basket == null)) {
@@ -45,14 +44,7 @@ public class Order {
 	// Kato vtoriq konstruktor pri Registration
 	public Order(User user, Long orderId, Long userId, Double price, String address, String phone,
 			LocalDate confirmDate, LocalDate deliveryDate) throws OrderException {
-		// if ((user == null) || (basket == null)) {
-		// throw new OrderException("Nevalidna poruchka");
-		// }
-		// if (basket.getBasketSize() <= 0) {
-		// throw new OrderException("Koshnicata e prazna");
-		// }
 		this.user = user;
-		// this.basket = basket;
 		this.price = price;
 		this.deliveryAddress = address;
 		this.phoneNumber = phone;
@@ -93,29 +85,34 @@ public class Order {
 		return orderID;
 	}
 
-	JsonObject addOrederToJson() throws IOException {
-		// File file = new File("Orders.json");
-		// file.createNewFile();
-		JsonObject jsonObject = new JsonObject();
-		// FileWriter fileWriter = new FileWriter(file);
-		ArrayList<Product> productsInBasket = new ArrayList<Product>(basket.getProducts());
-		jsonObject.addProperty("Order No.: ", this.orderID);
-		jsonObject.addProperty("User id: ", this.user.getId());
-		// jsonObject.addProperty("Na imeto na: ", this.user.getName());
-		jsonObject.addProperty("Cena ", this.price);
-		jsonObject.addProperty("Dostavka na adres: ", this.deliveryAddress);
-		jsonObject.addProperty("Telefon ", this.phoneNumber);
-		jsonObject.addProperty("Dostavkata e potvurdena na: ", this.confirmDate.toString());
-		jsonObject.addProperty("Data za dostavka: ", this.deliveryDate.toString());
-		JsonObject jsonProducts = new JsonObject();
-		for (Product p : productsInBasket) {
-			jsonProducts.addProperty("Product: ", p.toString() + "\r\n");
-			// fileWriter.append(jsonObject.toString());
-			// fileWriter.append("\r\n");
-		}
-		// Tova mi e Basket-a
-		jsonObject.add("Zakupeni produkti: ", jsonProducts);
-		return jsonObject;
-	}
+	// void addOrederToJson() throws IOException {
+	// File file = new File("Orders.json");
+	// file.createNewFile();
+	// JsonObject jsonObject = new JsonObject();
+	// FileWriter fileWriter = new FileWriter(file);
+	// ArrayList<Product> productsInBasket = new
+	// ArrayList<Product>(basket.getProducts());
+	// jsonObject.addProperty("Order No.: ", this.orderID);
+	// jsonObject.addProperty("User id: ", this.user.getId());
+	// // jsonObject.addProperty("Na imeto na: ", this.user.getName());
+	// jsonObject.addProperty("Cena ", this.price);
+	// jsonObject.addProperty("Dostavka na adres: ", this.deliveryAddress);
+	// jsonObject.addProperty("Telefon ", this.phoneNumber);
+	// jsonObject.addProperty("Dostavkata e potvurdena na: ",
+	// this.confirmDate.toString());
+	// jsonObject.addProperty("Data za dostavka: ", this.deliveryDate.toString());
+	// JsonObject jsonProducts = new JsonObject();
+	// for (Product p : productsInBasket) {
+	// jsonProducts.addProperty("Product: ", p.toString() + ", ");
+	//
+	// }
+	// // Tova mi e Basket-a
+	// jsonObject.add("Zakupeni produkti: ", jsonProducts);
+	// fileWriter.append(jsonObject.toString());
+	// fileWriter.append("\r\n");
+	// fileWriter.flush();
+	// fileWriter.close();
+	// // return jsonObject;
+	// }
 
 }
