@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -146,6 +147,24 @@ public class User {
 		return Collections.unmodifiableList(json);
 	}
 
+	static List<JSONObject> getAllOrders() throws Exception {
+		List<JSONObject> json = new ArrayList<JSONObject>();
+		JSONObject obj;
+		String line = null;
+		File file = new File("Orders.json");
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		FileReader fileReader = new FileReader(file);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		while ((line = bufferedReader.readLine()) != null) {
+			obj = (JSONObject) new JSONParser().parse(line);
+			json.add(obj);
+		}
+		bufferedReader.close();
+		return Collections.unmodifiableList(json);
+	}
+
 	public void addToBasket(Product p, int quantity) {
 		while (!this.isLoged) {
 			System.out.println("Za da dobavite produkt v kolichkata, purvo vlezte v acaunta si");
@@ -234,6 +253,18 @@ public class User {
 			confirmOrder(o);
 			this.setMoney(this.money - o.getPrice());
 			orders.add(o);
+			try {
+				addOrdersToFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			// Vsqka dobavena poruchka obnovqva json faila Orders
+			try {
+				addOrdersToFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			// poruchkata e potvurdena i koshnicata se prazni
 			basket.empty();
 
 		} catch (OrderException e) {
@@ -286,6 +317,9 @@ public class User {
 			for (JSONObject user : usersFromJson) {
 				users.put((Long) user.get("Reg_id: "),
 						new User(false, (Boolean) user.get("Is admin: ")));
+				users.put((Long) user.get("Reg_id: "), new User(false, (Boolean) user.get("Is admin: ")));
+				//za vseki novodobaven user ot Users.json mu se pulni orders s poruchki ot Orders.json
+				users.get(user.get("Reg_id: ")).addJsonToOrders();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -293,6 +327,7 @@ public class User {
 		return users;
 	}
 
+	// ODERS to JSON ???
 	static void addOrdersToFile() throws IOException {
 		File file = new File("Orders.json");
 		file.createNewFile();
@@ -303,17 +338,39 @@ public class User {
 			jsonObject.addProperty("USER: ", user.toString());
 
 			for (Order o : user.orders) {
-
+				jsonObject.add("ORDER", o.addOrederToJson());
+				fileWriter.append(jsonObject.toString());
+				fileWriter.append("\r\n");
 			}
-			jsonObject.addProperty("Is loged: ", users.get(id).isLoged);
-			jsonObject.addProperty("Is admin: ", users.get(id).isAdmin);
 			fileWriter.append(jsonObject.toString());
 			fileWriter.append("\r\n");
 		}
 		fileWriter.flush();
 		fileWriter.close();
-		// System.out.println("User added to file!");
 	}
+
+	// Ot Json gi nalivam v kolekciqta user.orders ArrayList<Order>
+	void addJsonToOrders() {
+		//
+		// for (Long id : users.keySet()) {
+		// User user = users.get(id);
+		this.orders = new ArrayList<Order>();
+
+		try {
+			ArrayList<JSONObject> ordersFromJson = new ArrayList<JSONObject>(getAllOrders());
+			for (JSONObject order : ordersFromJson) {
+				if ((Long) order.get("User id: ") == this.getId()) {
+					this.orders.add(new Order(this, (Long) order.get("Order No.: "), (Long) this.getId(),
+							(Double) order.get("Cena "), order.get("Dostavka na adres: ").toString(),
+							order.get("Telefon ").toString(), (LocalDate) order.get("Dostavkata e potvurdena na: "),
+							(LocalDate) order.get("Data za dostavka: ")));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	// }
 
 	User(boolean isLoged, boolean isAdmin) {
 		this.isLoged = isLoged;
