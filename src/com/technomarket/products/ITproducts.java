@@ -10,7 +10,6 @@ import java.util.TreeSet;
 
 public abstract class ITproducts extends Product {
 
-
 	public ITproducts(String name, String brand, double price, int availability, String model) {
 		super(name, brand, price, availability, model);
 	}
@@ -19,11 +18,21 @@ public abstract class ITproducts extends Product {
 	// public static Set<Product> generateITproducts() {
 	// Set<Product> products = new HashSet<Product>();
 
-	public static void generateITproducts() {
-		MobilePhone.generateMobilePhones();
-		Laptop.generateLaptops();
-		Television.generateTelevisions();
-		Tablet.generateTablets();
+	public static List<ITproducts> generateITproducts() {
+		
+		List<ITproducts> itp = new ArrayList<ITproducts>();
+//		
+//		MobilePhone.generateMobilePhones();
+//		Laptop.generateLaptops();
+//		Television.generateTelevisions();
+//		Tablet.generateTablets();
+		
+		itp.addAll(MobilePhone.generateMobilePhones());
+		itp.addAll(Laptop.generateLaptops());
+		itp.addAll(Television.generateTelevisions());
+		itp.addAll(Tablet.generateTablets());
+		
+		return itp;
 
 		// return products;
 	}
@@ -55,7 +64,8 @@ public abstract class ITproducts extends Product {
 			super("Mobile Phone", brand, price, availability, model);
 		}
 
-		public static void generateMobilePhones() {
+		public static List<MobilePhone> generateMobilePhones() {
+			List<MobilePhone> mps = new ArrayList<MobilePhone>();
 
 			String[] mobileBrands = { "Samsung", "Asus", "Lenovo", "iPhone", "Nokia", "Huawei", "Motorola", "HTC",
 					"Sony" };
@@ -71,10 +81,18 @@ public abstract class ITproducts extends Product {
 				MobilePhone temp = new MobilePhone(mobileBrands[randomBrand], randomPrice, randomQuantity,
 						mobileModels[randomModel]);
 				mobilePhones.add(temp);
+
+				for (MobilePhone mp : mobilePhones) {
+					mps.add(mp);
+				}
+
 			}
+			return mps;
+
 		}
 
 		public static void showMobilePhones() {
+
 			for (MobilePhone mp : mobilePhones) {
 				System.out.println(mp);
 			}
@@ -117,10 +135,11 @@ public abstract class ITproducts extends Product {
 			super("Laptop", brand, price, availability, model);
 		}
 
-		public static void generateLaptops() {
+		public static List<Laptop> generateLaptops() {
 			String[] laptopBrands = { "Dell", "Asus", "Lenovo", "Acer", "Toshiba", "HP", "Mac" };
 			String[] laptopModels = { "One", "Pro", "Super", "Gaming", "Bussiness" };
 
+			List<Laptop> laps = new ArrayList<Laptop>();
 			for (int count = 0; count < MAX_PRODUCTS; count++) {
 
 				int randomPrice = (int) (Math.random() * 2500) + 300;
@@ -132,6 +151,11 @@ public abstract class ITproducts extends Product {
 						laptopModels[randomModel]);
 				laptops.add(temp);
 			}
+
+			for (Laptop p : laptops) {
+				laps.add(p);
+			}
+			return laps;
 		}
 
 		public static void showLaptops() {
@@ -176,10 +200,11 @@ public abstract class ITproducts extends Product {
 			super("Tablet", brand, price, availability, model);
 		}
 
-		public static void generateTablets() {
+		public static List<Tablet> generateTablets() {
 			String[] tabletBrands = { "Dell", "Asus", "Lenovo", "Acer", "Toshiba", "HP", "Mac" };
 			String[] tabletModels = { "One", "Pro", "Super", "Gaming", "Bussiness" };
 
+			List<Tablet> tabs = new ArrayList<Tablet>();
 			for (int count = 0; count < MAX_PRODUCTS; count++) {
 
 				int randomPrice = (int) (Math.random() * 1200) + 100;
@@ -191,8 +216,14 @@ public abstract class ITproducts extends Product {
 						tabletModels[randomModel]);
 				tablets.add(temp);
 			}
+
+			for (Tablet t : tablets) {
+				tabs.add(t);
+			}
+
+			return tabs;
 		}
-		
+
 		public static void showTablets() {
 			for (Tablet t : tablets) {
 				System.out.println(t);
@@ -235,9 +266,11 @@ public abstract class ITproducts extends Product {
 			super("Television", brand, price, availability, model);
 		}
 
-		public static void generateTelevisions() {
+		public static List<Television> generateTelevisions() {
 			String[] TvBrands = { "LG", "Samsung", "Panasonic", "Philips", "Toshiba", "JVC", "Sony" };
 			String[] TvModels = { "HD", "FullHD", "UHD", "Led", "Oled" };
+
+			List<Television> tvs = new ArrayList<Television>();
 
 			for (int count = 0; count < MAX_PRODUCTS; count++) {
 
@@ -250,6 +283,11 @@ public abstract class ITproducts extends Product {
 						TvModels[randomModel]);
 				televisions.add(temp);
 			}
+
+			for (Television tv : televisions) {
+				tvs.add(tv);
+			}
+			return tvs;
 		}
 
 		public static void showTelevisions() {

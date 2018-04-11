@@ -1,15 +1,19 @@
 package com.technomarket.products;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.crypto.Data;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.technomarket.products.HomeCareProducts.Iron;
 import com.technomarket.products.HomeCareProducts.Peralnq;
@@ -96,22 +100,20 @@ public abstract class SearchBar {
 	}
 
 	public static void readJsonFile() throws Exception {
-		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
 		JSONObject obj;
 		String line = null;
 		FileReader fileReader = new FileReader("Products.json");
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		while ((line = bufferedReader.readLine()) != null) {
 			obj = (JSONObject) new JSONParser().parse(line);
-			json.add(obj);
 			Object id = obj.get("ID:");
 			Object name = obj.get("Type:");
 			Object brand = obj.get("Brand:");
 			Object model = obj.get("Model:");
 			Object price = obj.get("Price:");
 			Object availability = obj.get("Quantity:");
-			System.out.println("Product [ID: " + id + "  Type - " + name + "  Brand - " + brand + " Model: " + model + "   Price="
-				+ price + "lv   Quantity: " + availability + "]");
+			System.out.println("Product [ID: " + id + "  Type - " + name + "  Brand - " + brand + " Model: " + model
+					+ "   Price=" + price + "lv   Quantity: " + availability + "]");
 		}
 		bufferedReader.close();
 	}
@@ -122,15 +124,31 @@ public abstract class SearchBar {
 
 	public static void makeCatalog() {
 		// Put all products in the same place
-		catalog.addAll(Laptop.getLaptops());
 		catalog.addAll(MobilePhone.getMobilePhones());
-		catalog.addAll(Tablet.getTablets());
+		catalog.addAll(Laptop.getLaptops());
 		catalog.addAll(Television.getTelevisions());
+		catalog.addAll(Tablet.getTablets());
 		catalog.addAll(Prahosmukachka.getPrahosmukachki());
 		catalog.addAll(Iron.getIrons());
 		catalog.addAll(Peralnq.getPeralni());
 		catalog.addAll(Toster.getTosteri());
 		catalog.addAll(Pechka.getPechki());
+	}
+
+	public static void getRandomProduct() throws Exception {
+		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
+		JSONObject obj;
+		String line = null;
+		FileReader fileReader = new FileReader("Products.json");
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		while ((line = bufferedReader.readLine()) != null) {
+			obj = (JSONObject) new JSONParser().parse(line);
+			json.add(obj);
+		}
+		bufferedReader.close();
+		int index = (int) (Math.random() * json.size());
+		System.out.println(json.get(index).toJSONString());
+		json.remove(index);
 	}
 
 	public static void setKeyword(String k) {

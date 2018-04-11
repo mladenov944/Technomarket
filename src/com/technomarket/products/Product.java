@@ -1,6 +1,8 @@
 package com.technomarket.products;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Product {
 
@@ -56,21 +58,26 @@ public abstract class Product {
 		this.availability = availability;
 	}
 
-	// Genereting random IT products
-	public static void generateProducts() {
-//		File jsonFile = new File("Products.json");
-//		if (!jsonFile.exists()) {
-			ITproducts.generateITproducts();
-			HomeCareProducts.generateHomeCareProducts();
-			OtherProducts.generateOtherProducts();
+	// Generating random IT products
+	public static List<Product> generateProducts() {
+		
+		List<Product> allProducts = new ArrayList<Product>();
+		
+		File jsonFile = new File("Products.json");
+		if (!jsonFile.exists()) {
+			allProducts.addAll(ITproducts.generateITproducts());
+			allProducts.addAll(HomeCareProducts.generateHomeCareProducts());
+			allProducts.addAll(OtherProducts.generateOtherProducts());
 			try {
 				SearchBar.createJsonFile();
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println("Json file could not be created!");
 			}
-//		} else {
-//			System.out.println("Files were already created! Loading from json file now!");
-//		}
+			return allProducts;
+		} else {
+			System.out.println("Json file already exists!");
+			return allProducts;
+		}
 	}
 
 	// Showing all products
@@ -82,11 +89,9 @@ public abstract class Product {
 			} catch (Exception e) {
 				System.out.println("Cannot open Json file!" + e.getMessage());
 			}
+		} else {
+			System.out.println("Cannot find Json file!");
 		}
-		ITproducts.showAllProducts();
-		HomeCareProducts.showAllHomeCareProducts();
-		OtherProducts.showOtherProducts();
-
 	}
 
 	@Override

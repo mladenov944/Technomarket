@@ -39,6 +39,10 @@ public class User {
 	private double money;
 	private boolean isAdmin = false;;
 
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
 	public User(Registration reg) throws UserException {
 		if (userExists(reg)) {
 			throw new UserException("Takuv user sushtestvuva!");

@@ -88,6 +88,7 @@ public class Order {
 		}
 
 		jsonObject.add("Zakupeni produkti: ", jsonProducts);
+
 		return jsonObject;
 		// fileWriter.flush();
 		// fileWriter.close();
