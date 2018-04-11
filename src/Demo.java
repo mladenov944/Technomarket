@@ -10,7 +10,7 @@ public class Demo {
 	public static void main(String[] args) throws UserException {
 
 		User u = null;
-
+		Product.generateProducts();
 		Thread reklamnaNishka = new Thread(new Commercial());
 		reklamnaNishka.start();
 

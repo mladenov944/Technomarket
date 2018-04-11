@@ -124,31 +124,12 @@ public abstract class SearchBar {
 
 	public static void makeCatalog() {
 		// Put all products in the same place
-		catalog.addAll(MobilePhone.getMobilePhones());
-		catalog.addAll(Laptop.getLaptops());
-		catalog.addAll(Television.getTelevisions());
-		catalog.addAll(Tablet.getTablets());
-		catalog.addAll(Prahosmukachka.getPrahosmukachki());
-		catalog.addAll(Iron.getIrons());
-		catalog.addAll(Peralnq.getPeralni());
-		catalog.addAll(Toster.getTosteri());
-		catalog.addAll(Pechka.getPechki());
+		catalog.addAll(Product.generateProducts());
 	}
 
 	public static void getRandomProduct() throws Exception {
-		ArrayList<JSONObject> json = new ArrayList<JSONObject>();
-		JSONObject obj;
-		String line = null;
-		FileReader fileReader = new FileReader("Products.json");
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		while ((line = bufferedReader.readLine()) != null) {
-			obj = (JSONObject) new JSONParser().parse(line);
-			json.add(obj);
-		}
-		bufferedReader.close();
-		int index = (int) (Math.random() * json.size());
-		System.out.println(json.get(index).toJSONString());
-		json.remove(index);
+		int index = (int) (Math.random() * catalog.size());
+		System.out.println(catalog.get(index).toString());
 	}
 
 	public static void setKeyword(String k) {

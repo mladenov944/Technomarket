@@ -8,6 +8,8 @@ public abstract class Product {
 
 	protected static final int MAX_PRODUCTS = 10;
 
+	static List<Product> allProducts = new ArrayList<Product>();
+	
 	private final int id;
 	private static int staticId = 0;
 	private String name;
@@ -63,8 +65,6 @@ public abstract class Product {
 
 	// Generating random IT products
 	public static List<Product> generateProducts() {
-		
-		List<Product> allProducts = new ArrayList<Product>();
 		
 		File jsonFile = new File("Products.json");
 		if (!jsonFile.exists()) {
