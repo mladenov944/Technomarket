@@ -124,6 +124,16 @@ public class User {
 		this.isLoged = isLoged;
 		this.isAdmin = isAdmin;
 		this.basket = new Basket(this);
+		this.orders = new ArrayList<Order>();
+		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
+		try {
+			users.put(reg.getId(), this);
+			addUsersToJson();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private boolean userExists(Registration reg) {
@@ -184,8 +194,8 @@ public class User {
 				&& (this.money >= (this.basket.calculatePrice() + (p.getPrice() * quantity)))) {
 			this.basket.addProduct(p, quantity);
 			// TUKA!!!!!!!!!!!!!
-			p.updateQuantity(p.getId(), quantity);		
-//			p.setAvailability(p.getAvailability() - quantity);
+			p.updateQuantity(p.getId(), quantity);
+			// p.setAvailability(p.getAvailability() - quantity);
 			if (quantity == 0) {
 				Product.removeProduct(p.getId());
 			} else {
