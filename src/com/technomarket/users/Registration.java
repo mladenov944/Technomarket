@@ -40,6 +40,7 @@ public class Registration {
 			setPassword(password);
 		} catch (UserException e) {
 			System.out.println(e.getMessage());
+			return;
 		}
 		try {
 			this.id = getNextID();
