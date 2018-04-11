@@ -92,16 +92,27 @@ public class User {
 		Registration reg;
 		try {
 			reg = new Registration(firstName, lastName, mail, psw, isMale);
+			if (userExists(reg)) {
+				throw new UserException("Takuv user sushtestvuva!");
+			}
 		} catch (UserException | RegistrationException e) {
 			System.out.println(e.getMessage());
 			return;
 		}
+		this.reg = reg;
+		this.basket = new Basket(this);
+		this.orders = new HashMap<Long, Order>();
+		this.isLoged = false;
+		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
 		try {
-			User user = new User(reg);
-			System.out.println(user.toString());
-		} catch (UserException e) {
-			System.out.println(e.getMessage());
+			users.put(reg.getId(), this);
+			addUsersToJson();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		// System.out.println(user.toString());
 	}
 
 	private boolean userExists(Registration reg) {
