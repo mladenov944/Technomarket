@@ -101,9 +101,8 @@ public abstract class ShopFunction {
 	//updates Json file when there is a purchase
 	public static void updateJsonFile() throws Exception {
 		File jsonFile = new File("Products.json");
-		if (jsonFile.exists()) {
-			jsonFile.delete();
-		}
+		jsonFile.createNewFile();
+	
 		createJsonFile();
 	}
 
@@ -113,6 +112,9 @@ public abstract class ShopFunction {
 
 	public static void makeCatalog() {
 		// Put all products in the same place
+		if (!catalog.isEmpty()) {
+			catalog.clear();
+		}
 		catalog.addAll(Product.generateProducts());
 	}
 

@@ -48,7 +48,6 @@ public class Demo {
 					u = User.login();
 					id = u.getId();
 				} catch (Exception e) {
-					System.out.println("Cannot login right now! Try again later!");
 				}
 				break;
 			case "logout":
@@ -62,6 +61,22 @@ public class Demo {
 				return;
 			case "menu":
 				menu();
+				break;
+				
+			case "buy":
+				u.buy();
+				break;
+			case "addproduct":
+				
+				System.out.println("Vuvedete ID na produkta");
+				int id3 = sc.nextInt();
+				System.out.println("Vuvedete kolichestvo");
+				int kol = sc.nextInt();
+				Product temp = Product.getProductById(id3-1);
+				u.addToBasket(temp, kol);
+				ShopFunction.updateJsonFile();
+				System.out.println("Dobavihte v koshnicata : " + temp.toString());
+				
 				break;
 			case "stop":
 				System.out.println("Spirame reklamite...");
@@ -160,6 +175,9 @@ public class Demo {
 									menu();
 									break;
 								}
+							} else {
+								System.out.println("Wrong name");
+								break;
 							}
 
 							if (cat.toLowerCase().trim().equals("itproducts")) {
@@ -251,6 +269,9 @@ public class Demo {
 									break;
 								}
 
+							} else {
+								System.out.println("Wrong name");
+								break;
 							}
 
 							if (cat.toLowerCase().trim().equals("otherproducts")) {
@@ -299,6 +320,9 @@ public class Demo {
 									menu();
 									break;
 								}
+							} else {
+								System.out.println("Wrong name");
+								break;
 							}
 						default:
 							System.out.println("nevalidna komanda");
@@ -332,7 +356,9 @@ public class Demo {
 		System.out.println("5. Za informaciq otnostno saita >>> info");
 		System.out.println("6. Za da se vurnete v menuto >>> menu");
 		System.out.println("7. Za da sprete reklamite >>> stop");
-		System.out.println("8. Za da izlezete >>> exit");
+		System.out.println("8. Za da dobavite produkt kum kolichkata >>> addproduct");
+		System.out.println("9. Za da zakupite vashite produkti >>> buy");
+		System.out.println("10. Za da izlezete >>> exit");
 	}
 
 	private static void adminMenu() {

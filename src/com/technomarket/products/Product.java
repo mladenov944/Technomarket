@@ -31,6 +31,10 @@ public abstract class Product {
 	public static void addProduct(Product p) {
 		allProducts.add(p);
 	}
+	
+	public void updateQuantity(int id, int q) {
+		allProducts.get(id).setAvailability(allProducts.get(id).getAvailability()-q);
+	}
 
 	public static void removeProduct(int id) {
 		
@@ -41,6 +45,10 @@ public abstract class Product {
 				removeIterator.remove();
 			}
 		}
+	}
+	
+	public static Product getProductById(int id) {
+		return allProducts.get(id);
 	}
 	
 	public int getId() {
