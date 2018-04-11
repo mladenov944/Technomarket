@@ -60,15 +60,6 @@ public abstract class ShopFunction {
 		}
 	}
 
-	public static void printCatalog() {
-		if (catalog.isEmpty()) {
-			makeCatalog();
-		}
-		for (Product p : catalog) {
-			System.out.println(p.toString());
-		}
-	}
-
 	public static void createJsonFile() throws Exception {
 		JsonObject jsonObject = new JsonObject();
 		FileWriter fileWriter = new FileWriter("Products.json");
@@ -107,7 +98,7 @@ public abstract class ShopFunction {
 		}
 		bufferedReader.close();
 	}
-
+	//updates Json file when there is a purchase
 	public static void updateJsonFile() throws Exception {
 		File jsonFile = new File("Products.json");
 		if (jsonFile.exists()) {
@@ -147,7 +138,7 @@ public abstract class ShopFunction {
 		if (minPrice >= 0) {
 			minPrice = m;
 		} else {
-			System.out.println("Invalid price! Setting price to 0");
+			System.out.println("Invalid min price! Setting min price to 0.");
 			minPrice = 0;
 		}
 	}
@@ -156,13 +147,19 @@ public abstract class ShopFunction {
 		return maxPrice;
 	}
 
-	// max price is minPrice + 1 until i have maxPrice of all
 	public static void setMaxPrice(int m) {
 		if (m > 0 && m > getMinPrice()) {
 			maxPrice = m;
 		} else {
 			System.out.println("Invalid max price!");
-			maxPrice = getMinPrice() + 1;
+			int tempIndex = 0;
+			for(int index = 0;index < catalog.size();index++) {
+				if(catalog.get(tempIndex).getPrice() <= catalog.get(index).getPrice()) {
+					tempIndex = index;
+				}
+			}
+			//price of most expensive product
+			maxPrice = (int) catalog.get(tempIndex).getPrice();
 		}
 	}
 }
