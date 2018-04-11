@@ -51,7 +51,12 @@ public class Demo {
 				}
 				break;
 			case "logout":
-				User.logout(id);
+				if ((u == null) || (!u.isLoged())) {
+				System.out.println("Ne ste lognat");
+				} else {
+					User.logout(id);
+					break;
+				}
 				break;
 			case "info":
 				System.out.println("Technomarket - sait prednaznachen za elektronni ustroistva");
@@ -83,6 +88,10 @@ public class Demo {
 				break;
 
 			case "admin":
+				if (u == null) {
+					System.out.println("Please log in...");
+					break;
+				}
 				if (u.isAdmin()) {
 					System.out.println("Admin login!");
 					adminMenu();
