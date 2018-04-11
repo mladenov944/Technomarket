@@ -1,10 +1,14 @@
 package com.technomarket.users;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.gson.JsonObject;
 import com.technomarket.products.Product;
 
 public class Basket {
@@ -65,5 +69,9 @@ public class Basket {
 	public void empty() {
 		this.products.clear();
 		this.priceAllProducts = 0;
+	}
+
+	public List<Product> getProducts() {
+		return Collections.unmodifiableList(products);
 	}
 }

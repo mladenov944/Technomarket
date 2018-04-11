@@ -1,9 +1,14 @@
 package com.technomarket.users;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.gson.JsonObject;
 import com.technomarket.products.Product;
 
 public class Order {
@@ -60,6 +65,23 @@ public class Order {
 
 	public long getOrderID() {
 		return orderID;
+	}
+	
+	static void addOrederToJson() throws IOException {
+		File file = new File("Orders.json");
+		file.createNewFile();
+		JsonObject jsonObject = new JsonObject();
+		FileWriter fileWriter = new FileWriter(file);
+		ArrayList<Product> basket=getProduchts();
+		for (Long id : users.keySet()) {
+			jsonObject.addProperty("Reg_id: ", id);
+			jsonObject.addProperty("Is loged: ", users.get(id).isLoged);
+			fileWriter.append(jsonObject.toString());
+			fileWriter.append("\r\n");
+		}
+		fileWriter.flush();
+		fileWriter.close();
+		// System.out.println("User added to file!");
 	}
 
 }

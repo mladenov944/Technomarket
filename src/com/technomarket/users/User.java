@@ -37,6 +37,7 @@ public class User {
 	private Map<Long, Order> orders;
 	static Scanner sc = new Scanner(System.in);
 	private double money;
+	private boolean isAdmin = false;;
 
 	public User(Registration reg) throws UserException {
 		if (userExists(reg)) {
@@ -81,6 +82,9 @@ public class User {
 		String lastName = sc.nextLine();
 		System.out.println("Enter email: ");
 		String mail = sc.nextLine();
+		if (mail.toLowerCase().startsWith("admin")) {
+			this.isAdmin = true;
+		}
 		System.out.println("Enter password: ");
 		String psw = sc.nextLine();
 		System.out.println("m/f: ");
@@ -264,12 +268,13 @@ public class User {
 		for (Long id : users.keySet()) {
 			jsonObject.addProperty("Reg_id: ", id);
 			jsonObject.addProperty("Is loged: ", users.get(id).isLoged);
+			jsonObject.addProperty("Is admin: ", users.get(id).isAdmin);
 			fileWriter.append(jsonObject.toString());
 			fileWriter.append("\r\n");
 		}
 		fileWriter.flush();
 		fileWriter.close();
-		System.out.println("User added to file!");
+		// System.out.println("User added to file!");
 	}
 
 	static HashMap<Long, User> addJsonToUsers() {
@@ -296,6 +301,10 @@ public class User {
 
 	public boolean isLoged() {
 		return isLoged;
+	}
+
+	public long getId() {
+		return this.reg.getId();
 	}
 
 	@Override
