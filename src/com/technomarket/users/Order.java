@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.JsonObject;
@@ -23,6 +24,7 @@ public class Order {
 	private String phoneNumber;
 	private LocalDate confirmDate;
 	private LocalDate deliveryDate;
+	// private static ArrayList<Order> users = addJsonToUsers();
 
 	public Order(User user, Basket basket) throws OrderException {
 		if ((user == null) || (basket == null)) {
@@ -66,21 +68,29 @@ public class Order {
 	public long getOrderID() {
 		return orderID;
 	}
-	
-	static void addOrederToJson() throws IOException {
-		File file = new File("Orders.json");
-		file.createNewFile();
+
+	JsonObject addOrederToJson() throws IOException {
+		// File file = new File("Orders.json");
+		// file.createNewFile();
 		JsonObject jsonObject = new JsonObject();
-		FileWriter fileWriter = new FileWriter(file);
-		ArrayList<Product> basket=getProduchts();
-		for (Long id : users.keySet()) {
-			jsonObject.addProperty("Reg_id: ", id);
-			jsonObject.addProperty("Is loged: ", users.get(id).isLoged);
-			fileWriter.append(jsonObject.toString());
-			fileWriter.append("\r\n");
+		// FileWriter fileWriter = new FileWriter(file);
+		ArrayList<Product> productsInBasket = new ArrayList<Product>(basket.getProducts());
+		jsonObject.addProperty("Order No.: ", this.orderID);
+		// jsonObject.addProperty("Na imeto na: ", this.user.getName());
+		jsonObject.addProperty("Cena ", this.price);
+		jsonObject.addProperty("Dostavka na adres: ", this.deliveryAddress);
+		jsonObject.addProperty("Data za dostavka: ", this.deliveryDate.toString());
+		JsonObject jsonProducts = new JsonObject();
+		for (Product p : productsInBasket) {
+			jsonProducts.addProperty("Product: ", p.toString() + "\r\n");
+			// fileWriter.append(jsonObject.toString());
+			// fileWriter.append("\r\n");
 		}
-		fileWriter.flush();
-		fileWriter.close();
+
+		jsonObject.add("Zakupeni produkti: ", jsonProducts);
+		return jsonObject;
+		// fileWriter.flush();
+		// fileWriter.close();
 		// System.out.println("User added to file!");
 	}
 

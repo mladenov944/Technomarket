@@ -34,7 +34,7 @@ public class User {
 	private Registration reg;
 	private Basket basket;
 	private boolean isLoged;
-	private Map<Long, Order> orders;
+	private ArrayList<Order> orders;
 	static Scanner sc = new Scanner(System.in);
 	private double money;
 	private boolean isAdmin = false;;
@@ -45,7 +45,7 @@ public class User {
 		}
 		this.reg = reg;
 		this.basket = new Basket(this);
-		this.orders = new HashMap<Long, Order>();
+		this.orders = new ArrayList<Order>();
 		this.isLoged = false;
 		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
 		try {
@@ -105,7 +105,7 @@ public class User {
 		}
 		this.reg = reg;
 		this.basket = new Basket(this);
-		this.orders = new HashMap<Long, Order>();
+		this.orders = new ArrayList<Order>();
 		this.isLoged = false;
 		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
 		try {
@@ -233,8 +233,9 @@ public class User {
 			System.out.println(o.toString() + '\n' + "Molq potvurdete poruchkata");
 			confirmOrder(o);
 			this.setMoney(this.money - o.getPrice());
-			orders.put(o.getOrderID(), o);
+			orders.add(o);
 			basket.empty();
+
 		} catch (OrderException e) {
 			System.out.println(e.getMessage());
 		}
@@ -260,6 +261,7 @@ public class User {
 		return false;
 	}
 
+	// Order checked!
 	static void addUsersToJson() throws IOException {
 		File file = new File("Users.json");
 		file.createNewFile();
@@ -282,7 +284,8 @@ public class User {
 		try {
 			ArrayList<JSONObject> usersFromJson = new ArrayList<JSONObject>(getAllUsers());
 			for (JSONObject user : usersFromJson) {
-				users.put((Long) user.get("Reg_id: "), new User((Boolean) user.get("Is loged: ")));
+				users.put((Long) user.get("Reg_id: "),
+						new User((Boolean) user.get("Is loged: "), (Boolean) user.get("Is admin: ")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -290,8 +293,31 @@ public class User {
 		return users;
 	}
 
-	User(boolean isLoged) {
+	static void addOrdersToFile() throws IOException {
+		File file = new File("Orders.json");
+		file.createNewFile();
+		JsonObject jsonObject = new JsonObject();
+		FileWriter fileWriter = new FileWriter(file);
+		for (Long id : users.keySet()) {
+			User user = users.get(id);
+			jsonObject.addProperty("USER: ", user.toString());
+
+			for (Order o : user.orders) {
+
+			}
+			jsonObject.addProperty("Is loged: ", users.get(id).isLoged);
+			jsonObject.addProperty("Is admin: ", users.get(id).isAdmin);
+			fileWriter.append(jsonObject.toString());
+			fileWriter.append("\r\n");
+		}
+		fileWriter.flush();
+		fileWriter.close();
+		// System.out.println("User added to file!");
+	}
+
+	User(boolean isLoged, boolean isAdmin) {
 		this.isLoged = isLoged;
+		this.isAdmin = isAdmin;
 	}
 
 	public void setMoney(double money) {
@@ -307,9 +333,12 @@ public class User {
 		return this.reg.getId();
 	}
 
+	public String getName() {
+		return this.reg.getFirstName() + " " + this.reg.getLastName();
+	}
+
 	@Override
 	public String toString() {
-		return ("USER: " + '\n' + "Ime: " + this.reg.getFirstName() + " " + this.reg.getLastName() + '\n' + "Email: "
-				+ this.reg.getEmail() + '\n');
+		return ("Ime: " + this.reg.getFirstName() + " " + this.reg.getLastName() + '\n');
 	}
 }
