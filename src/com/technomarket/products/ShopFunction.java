@@ -1,31 +1,21 @@
 package com.technomarket.products;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.xml.crypto.Data;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.technomarket.products.HomeCareProducts.Iron;
-import com.technomarket.products.HomeCareProducts.Peralnq;
-import com.technomarket.products.HomeCareProducts.Prahosmukachka;
-import com.technomarket.products.ITproducts.Laptop;
-import com.technomarket.products.ITproducts.MobilePhone;
-import com.technomarket.products.ITproducts.Tablet;
-import com.technomarket.products.ITproducts.Television;
-import com.technomarket.products.OtherProducts.Pechka;
-import com.technomarket.products.OtherProducts.Toster;
 
-public abstract class SearchBar {
+
+public abstract class ShopFunction {
 
 	private static String keyword;
 	private static int minPrice;
@@ -116,6 +106,14 @@ public abstract class SearchBar {
 					+ "   Price=" + price + "lv   Quantity: " + availability + "]");
 		}
 		bufferedReader.close();
+	}
+
+	public static void updateJsonFile() throws Exception {
+		File jsonFile = new File("Products.json");
+		if (jsonFile.exists()) {
+			jsonFile.delete();
+		}
+		createJsonFile();
 	}
 
 	public String getKeyword() {
