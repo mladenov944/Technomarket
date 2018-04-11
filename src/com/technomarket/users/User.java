@@ -85,19 +85,23 @@ public class User {
 		String psw = sc.nextLine();
 		System.out.println("m/f: ");
 		char male = sc.next().charAt(0);
-		boolean isMale=true;
-		if(male=='f') {
-			isMale=false;
+		boolean isMale = true;
+		if (male == 'f') {
+			isMale = false;
 		}
 		Registration reg;
 		try {
 			reg = new Registration(firstName, lastName, mail, psw, isMale);
+		} catch (UserException | RegistrationException e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+		try {
 			User user = new User(reg);
 			System.out.println(user.toString());
-		} catch (UserException | RegistrationException e) {
-			e.printStackTrace();
+		} catch (UserException e) {
+			System.out.println(e.getMessage());
 		}
-
 	}
 
 	private boolean userExists(Registration reg) {
