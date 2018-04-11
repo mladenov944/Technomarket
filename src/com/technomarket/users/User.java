@@ -18,6 +18,7 @@ import org.json.simple.parser.JSONParser;
 
 import com.google.gson.JsonObject;
 import com.technomarket.products.Product;
+import com.technomarket.products.SearchBar;
 
 public class User {
 
@@ -38,6 +39,25 @@ public class User {
 	private double money;
 
 	public User(Registration reg) throws UserException {
+		if (userExists(reg)) {
+			throw new UserException("Takuv user sushtestvuva!");
+		}
+		this.reg = reg;
+		this.basket = new Basket(this);
+		this.orders = new HashMap<Long, Order>();
+		this.isLoged = false;
+		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
+		try {
+			users.put(reg.getId(), this);
+			addUsersToJson();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public User() throws UserException {
+		
 		if (userExists(reg)) {
 			throw new UserException("Takuv user sushtestvuva!");
 		}
@@ -157,6 +177,7 @@ public class User {
 
 	public void logout() {
 		if (this.isLoged) {
+			Se
 			this.isLoged = false;
 			users.remove(this.reg.getId());
 			users.put(this.reg.getId(), this);
