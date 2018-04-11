@@ -36,7 +36,7 @@ public abstract class IData {
 			isValidNumber = false;
 		} else {
 			for (int i = 0; i < phone.length(); i++) {
-				if (phone.charAt(i) < '0' || phone.charAt(i) > 9) {
+				if (phone.charAt(i) < '0' || phone.charAt(i) > '9') {
 					isValidNumber = false;
 				}
 			}
