@@ -56,25 +56,6 @@ public class User {
 			e.printStackTrace();
 		}
 	}
-	public User() throws UserException {
-		
-		if (userExists(reg)) {
-			throw new UserException("Takuv user sushtestvuva!");
-		}
-		this.reg = reg;
-		this.basket = new Basket(this);
-		this.orders = new HashMap<Long, Order>();
-		this.isLoged = false;
-		this.setMoney((Double) Math.random() * ((MAX_MONEY - MIN_MONEY) + MIN_MONEY));
-		try {
-			users.put(reg.getId(), this);
-			addUsersToJson();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public static User generateUser() {
 		boolean isMale = (Math.random() > 0.5) ? true : false;
@@ -91,6 +72,32 @@ public class User {
 			e.printStackTrace();
 		}
 		return user;
+	}
+
+	public User() {
+		System.out.println("First name: ");
+		String firstName = sc.nextLine();
+		System.out.println("Last name: ");
+		String lastName = sc.nextLine();
+		System.out.println("Enter email: ");
+		String mail = sc.nextLine();
+		System.out.println("Enter password: ");
+		String psw = sc.nextLine();
+		System.out.println("m/f: ");
+		char male = sc.next().charAt(0);
+		boolean isMale=true;
+		if(male=='f') {
+			isMale=false;
+		}
+		Registration reg;
+		try {
+			reg = new Registration(firstName, lastName, mail, psw, isMale);
+			User user = new User(reg);
+			System.out.println(user.toString());
+		} catch (UserException | RegistrationException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private boolean userExists(Registration reg) {
@@ -177,7 +184,6 @@ public class User {
 
 	public void logout() {
 		if (this.isLoged) {
-			Se
 			this.isLoged = false;
 			users.remove(this.reg.getId());
 			users.put(this.reg.getId(), this);
