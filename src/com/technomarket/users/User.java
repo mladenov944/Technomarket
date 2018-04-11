@@ -183,9 +183,11 @@ public class User {
 		if ((p != null) && (quantity > 0) && (p.getAvailability() >= quantity)
 				&& (this.money >= (this.basket.calculatePrice() + (p.getPrice() * quantity)))) {
 			this.basket.addProduct(p, quantity);
-			p.setAvailability(p.getAvailability() - quantity);
+			// TUKA!!!!!!!!!!!!!
+			p.updateQuantity(p.getId(), quantity);		
+//			p.setAvailability(p.getAvailability() - quantity);
 			if (quantity == 0) {
-				p.removeProduct(p.getId());
+				Product.removeProduct(p.getId());
 			} else {
 				System.out.println("Produkta ne moje da bude dobaven v koshnicata");
 			}
